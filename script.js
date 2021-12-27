@@ -60,7 +60,9 @@ createFolderBtn.addEventListener('click', (e) => {
 cancelEditFolderModal.addEventListener('click', function () {
   editFolderModal.style.display = 'none';
 });
-editFolderBtn.addEventListener('click', () => {});
+editFolderBtn.addEventListener('click', () => {
+ editFolderModal.style.display = 'none'
+});
 
 editFolderBtn.addEventListener('click', (e) => {
   let dataArr = JSON.parse(localStorage.getItem('data'));
@@ -151,25 +153,28 @@ deleteFolderBtn.addEventListener('click', () => {
 
 searchBar.addEventListener('keyup', function () {
  query = searchBar.value;
- console.log(query);
+ searchFn(query)
 
- all_folders = document.querySelectorAll(".folderBox")
 
- let dataArr = JSON.parse(localStorage.getItem('data'));
- dataArr.forEach((element) => {
-  current_folder = document.getElementById(`${element.id}`);
-  if (element.folderName.includes(query)){
-   // console.log(current_folder);
-   current_folder.style.display = 'block';
-  }
-  else {
-   current_folder.style.display = 'none'
-  }
- })
 
 })
 
 
 cancelBox.addEventListener('click', () => {
- searchBar.value =''
+ searchBar.value = ''
+ searchFn('')
 })
+
+function searchFn(query) {
+  all_folders = document.querySelectorAll('.folderBox');
+  let dataArr = JSON.parse(localStorage.getItem('data'));
+  dataArr.forEach((element) => {
+    current_folder = document.getElementById(`${element.id}`);
+    if (element.folderName.includes(query) || query === '') {
+      // console.log(current_folder);
+      current_folder.style.display = 'block';
+    } else {
+      current_folder.style.display = 'none';
+    }
+  });
+}

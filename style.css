@@ -207,11 +207,11 @@ body {
   background-color: #fff;
   border: 1px solid #dadce0;
   border-radius: 6px;
-
+  cursor: pointer;
   background-color: #f4f4f4;
   overflow: hidden;
 
-  display:'block';
+  display: 'block';
 }
 
 .editBox {
@@ -265,7 +265,7 @@ body {
 
 /* Modal Rename */
 
-.modal{
+.modal {
   position: absolute;
   top: 0;
   height: 100%;
@@ -276,102 +276,107 @@ body {
   align-items: center;
 }
 
-#addFolderModal,#editFolderModal,#deleteFolderModal{
- display: none;
+#addFolderModal,
+#editFolderModal,
+#deleteFolderModal {
+  display: none;
 }
 
-.innerModal{
- height: 10rem;
- position: relative;
- top: 50%;
- left: 50%;
-transform: translate(-50%,-50%);
- width: 25rem;
- background-color: white;
- border-radius: 0.5REM;
- box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+.innerModal {
+  height: 10rem;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px,
+    rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
 }
-.nameText{
- height: 2.5rem;
- width: 100%;
- display: flex;
- align-items: center;
- font-family: sans-serif;
- font-size: 1.2rem;
- padding-left: 1rem;
-}
-
-.modal-inputBox{
- height: 4rem;
- width: 100%;
- display: flex;
- justify-content: center;
- align-items: center;
- padding-left: 1rem;
- padding-right: 1rem;
- font-family: sans-serif;
- font-size: 1.25rem;
-}
-.modal-inputBox input{
- height: 50%;
- width: 100%;
-border: 2px solid #d7d7d7;
-outline: none;
-font-size: 1rem;
-padding-left: 0.5rem;
-
-}
-.modal-inputBox input:hover{
- height: 50%;
- width: 100%;
- border: 2px solid #4285f4;
-}
-.cancel_confirm-box{
- height: calc(100% - 6.5rem);
- width: 100%;
-
- display: flex;
- justify-content: flex-end;
- align-items: center;
- padding-left: 1rem;
- padding-right: 1rem;
- gap: 1rem;
+.nameText {
+  height: 2.5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-family: sans-serif;
+  font-size: 1.2rem;
+  padding-left: 1rem;
 }
 
-.cancel-btn ,.confirm-btn{
- height: 65%;
- width: 4.5rem;
- background-color: #4285f4;
- border-radius: 0.2rem;
- display: flex;
- justify-content: center;
- align-items: center;
- font-family: sans-serif;
- color: white;
- font-weight: 400;
- font-size: 1.1rem;
- cursor: pointer;
+.modal-inputBox {
+  height: 4rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-family: sans-serif;
+  font-size: 1.25rem;
 }
-.confirm-btn:hover{
- box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+.modal-inputBox input {
+  height: 50%;
+  width: 100%;
+  border: 2px solid #d7d7d7;
+  outline: none;
+  font-size: 1rem;
+  padding-left: 0.5rem;
 }
-.cancel-btn{
-background-color: transparent;
-color: black;
+.modal-inputBox input:hover {
+  height: 50%;
+  width: 100%;
+  border: 2px solid #4285f4;
 }
-.cancel-btn:hover{
- box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+.cancel_confirm-box {
+  height: calc(100% - 6.5rem);
+  width: 100%;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  gap: 1rem;
 }
 
+.cancel-btn,
+.confirm-btn {
+  height: 65%;
+  width: 4.5rem;
+  background-color: #4285f4;
+  border-radius: 0.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  color: white;
+  font-weight: 400;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.confirm-btn:hover {
+  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
+    rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+.cancel-btn {
+  background-color: transparent;
+  color: black;
+}
+.cancel-btn:hover {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
+    rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
+    rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+}
 
-#createBtn{
- height: 85%;
- width: 3rem;
- border: none;
+#createBtn {
+  height: 85%;
+  width: 3rem;
+  border: none;
 
- border-radius: 0.5rem;
- display: flex;
- justify-content: center;
- align-items: center;
- color: #707478;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #707478;
 }
