@@ -1,0 +1,377 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.main-container {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Header Bar Css Start */
+
+.header-container {
+  height: 4rem;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchBox_and_addBox_container {
+  height: 85%;
+  width: 45rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.searchBox {
+  height: 90%;
+  width: 75%;
+  background-color: #f1f3f4;
+  border-radius: 0.5rem;
+  display: flex;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+}
+.searchBox:hover {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+
+.searchIcon {
+  height: 100%;
+  width: 3rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchIcon span {
+  font-size: 1.4rem;
+  color: #5f6368;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.searchBox span:hover {
+  background-color: rgba(60, 64, 67, 0.08);
+}
+
+.inputBox {
+  height: 100%;
+  width: calc(100% - 3rem);
+}
+
+.inputBox input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  font-size: 1.1rem;
+}
+
+.inputBox input::placeholder {
+  color: #b0b1b2;
+}
+
+.cancelBox {
+  height: 100%;
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cancelBox span {
+  font-size: 1.4rem;
+  color: #5f6368;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cancelBox span:hover {
+  background-color: rgba(60, 64, 67, 0.08);
+}
+
+/* Header Bar Css Over */
+
+/* Content Area Css Start */
+
+.content-container {
+  height: calc(100% - 4rem);
+  width: 100%;
+  padding: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* Path Contianer css Start */
+.path-container {
+  height: 3rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-bottom: 1px solid #dadce0;
+  border-top: 1px solid #dadce0;
+}
+
+.rootBox-contianer {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rootBox-contianer span {
+  color: #818181;
+}
+
+.rootBox {
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  border-radius: 0.4rem;
+  color: #484c4e;
+}
+.rootBox:hover {
+  background-color: rgba(60, 64, 67, 0.08);
+}
+/* Path Contianer css End */
+
+/* folder Container css Start */
+
+.folder-container {
+  height: calc(100% - 3rem);
+  width: 100%;
+  font-family: sans-serif;
+  border-radius: 0.4rem;
+  color: #5f6368;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.folder-navigation {
+  height: 2.5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+}
+
+.inner-folder-container {
+  height: calc(100% - 2.5rem);
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  /* justify-content: center; */
+  /* align-items: center; */
+  gap: 1rem;
+}
+
+.folderBox {
+  height: 8rem;
+  width: 8rem;
+  border: 2px solid red;
+  background-color: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 6px;
+
+  background-color: #f4f4f4;
+  overflow: hidden;
+
+  display:'block';
+}
+
+.editBox {
+  height: 1.8rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.3rem;
+  padding-right: 0.3rem;
+}
+.editBox span {
+  height: 1.3rem;
+  width: 1.3rem;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.editBox span:hover {
+  font-size: 1rem;
+  background-color: rgba(60, 64, 67, 0.08);
+  border-radius: 50%;
+}
+.folderIcon {
+  height: calc(100% - 3.8rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.folderIcon span {
+  font-size: 5rem;
+}
+.folderName {
+  height: 2rem;
+  width: 100%;
+  color: #4e4e4e;
+  font-weight: 600;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+/* /* folder Container css End */
+
+/* Content Area Css End */
+
+/* Modal Rename */
+
+.modal{
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.425);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#addFolderModal,#editFolderModal,#deleteFolderModal{
+ display: none;
+}
+
+.innerModal{
+ height: 10rem;
+ position: relative;
+ top: 50%;
+ left: 50%;
+transform: translate(-50%,-50%);
+ width: 25rem;
+ background-color: white;
+ border-radius: 0.5REM;
+ box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+}
+.nameText{
+ height: 2.5rem;
+ width: 100%;
+ display: flex;
+ align-items: center;
+ font-family: sans-serif;
+ font-size: 1.2rem;
+ padding-left: 1rem;
+}
+
+.modal-inputBox{
+ height: 4rem;
+ width: 100%;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ padding-left: 1rem;
+ padding-right: 1rem;
+ font-family: sans-serif;
+ font-size: 1.25rem;
+}
+.modal-inputBox input{
+ height: 50%;
+ width: 100%;
+border: 2px solid #d7d7d7;
+outline: none;
+font-size: 1rem;
+padding-left: 0.5rem;
+
+}
+.modal-inputBox input:hover{
+ height: 50%;
+ width: 100%;
+ border: 2px solid #4285f4;
+}
+.cancel_confirm-box{
+ height: calc(100% - 6.5rem);
+ width: 100%;
+
+ display: flex;
+ justify-content: flex-end;
+ align-items: center;
+ padding-left: 1rem;
+ padding-right: 1rem;
+ gap: 1rem;
+}
+
+.cancel-btn ,.confirm-btn{
+ height: 65%;
+ width: 4.5rem;
+ background-color: #4285f4;
+ border-radius: 0.2rem;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ font-family: sans-serif;
+ color: white;
+ font-weight: 400;
+ font-size: 1.1rem;
+ cursor: pointer;
+}
+.confirm-btn:hover{
+ box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+.cancel-btn{
+background-color: transparent;
+color: black;
+}
+.cancel-btn:hover{
+ box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+}
+
+
+#createBtn{
+ height: 85%;
+ width: 3rem;
+ border: none;
+
+ border-radius: 0.5rem;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ color: #707478;
+}

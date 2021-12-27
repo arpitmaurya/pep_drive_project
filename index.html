@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="header-container">
+        <div class="searchBox_and_addBox_container">
+          <div class="searchBox">
+            <div class="searchIcon">
+              <span class="material-icons-outlined"> search </span>
+            </div>
+            <div class="inputBox">
+              <input type="text" id="searchBar" placeholder="Search" />
+            </div>
+            <div class="cancelBox">
+              <span class="material-icons-outlined"> close </span>
+            </div>
+          </div>
+          <button id="createBtn">
+            <span class="material-icons-outlined">
+              add
+              </span>
+          </button>
+        </div>
+
+      </div>
+      <div class="content-container">
+        <div class="path-container">
+          <div class="rootBox-contianer">
+            <div class="rootBox">Root</div>
+            <span class="material-icons-outlined"> chevron_right </span>
+          </div>
+          <div class="rootBox-contianer">
+            <div class="rootBox">For Example</div>
+            <span class="material-icons-outlined"> chevron_right </span>
+          </div>
+        </div>
+        <div class="folder-container">
+          <div class="folder-navigation">Folder</div>
+          <div class="inner-folder-container">
+        </div>
+      </div>
+    </div>
+
+
+    <!-- /Rename Modal -->
+
+    <div class="modal" id="addFolderModal" >
+      <div class="innerModal">
+        <div class="nameText">
+         Add Folder
+        </div>
+        <div class="modal-inputBox">
+         <input id="createFolderInput" type="text" placeholder="Add Folder Name">
+        </div>
+        <div class="cancel_confirm-box">
+         <div class="cancel-btn" id="canceladdFolderModal"> Cancel</div>
+         <div class="confirm-btn" id="createFolderBtn"> OK</div>
+        </div>
+      </div>
+    </div> 
+
+
+    <div class="modal" id="editFolderModal" >
+      <div class="innerModal">
+        <div class="nameText">
+         Rename Folder
+        </div>
+        <div class="modal-inputBox">
+         <input id="renameFolderInput" type="text" placeholder="Rename Folder ">
+        </div>
+        <div class="cancel_confirm-box">
+         <div class="cancel-btn" id="cancelEditFolderModal"> Cancel</div>
+         <div class="confirm-btn" id="editFolderBtn"> OK</div>
+        </div>
+      </div>
+    </div> 
+
+
+
+    <div class="modal" id="deleteFolderModal" >
+      <div class="innerModal">
+        <div class="nameText">
+         Delete Folder
+        </div>
+        <div class="modal-inputBox">
+          This folder will be deleted. Confirm?
+        </div>
+        <div class="cancel_confirm-box">
+         <div class="cancel-btn" id="cancelDeleteFolderModal"> Cancel</div>
+         <div class="confirm-btn" id="deleteFolderBtn"> OK</div>
+        </div>
+      </div>
+    </div> 
+
+
+
+
+
+
+
+    <script src="./script.js"></script>
+  </body>
+</html>
