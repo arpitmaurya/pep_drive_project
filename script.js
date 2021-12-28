@@ -12,7 +12,7 @@ let deleteFolderBtn = document.querySelector('#deleteFolderBtn');
 
 let deleteFolderModal = document.querySelector('#deleteFolderModal');
 
-let searchBar = document.querySelector("#searchBar");
+let searchBar = document.querySelector('#searchBar');
 
 let cancelDeleteFolderModal = document.querySelector(
   '#cancelDeleteFolderModal'
@@ -35,7 +35,7 @@ createFolderBtn.addEventListener('click', (e) => {
   let arrData = [];
   let folderListObj = localStorage.getItem('data');
   if (!folderListObj) {
-    let newId = uid()
+    let newId = uid();
     let obj = {
       id: newId,
       folderName: folderName,
@@ -62,7 +62,7 @@ cancelEditFolderModal.addEventListener('click', function () {
   editFolderModal.style.display = 'none';
 });
 editFolderBtn.addEventListener('click', () => {
-  editFolderModal.style.display = 'none'
+  editFolderModal.style.display = 'none';
 });
 
 editFolderBtn.addEventListener('click', (e) => {
@@ -101,7 +101,6 @@ function createFolders() {
               <div class="folderName"> ${e.folderName}</div>
   `;
 
-
       document.querySelector('.inner-folder-container').append(div);
 
       let folderBox = div;
@@ -109,28 +108,23 @@ function createFolders() {
         document.querySelector('.inner-folder-container').innerHTML = ``;
         // clickedToGoInsideFolder_id = folderBox.getAttribute('id')
 
-        breadcrumbs = document.querySelector(".path-container")
+        breadcrumbs = document.querySelector('.path-container');
 
         let div = document.createElement('div');
         div.classList.add('rootBox-contianer');
         div.innerHTML = `
   <div class="rootBox" id=${folderBox.id}>${folderBox.children[2].innerText}</div>
-  <span class="material-icons-outlined"> chevron_right </span>`
+  <span class="material-icons-outlined"> chevron_right </span>`;
 
-        breadcrumbs.append(div)
-      })
-
-
-
-
-
-
+        breadcrumbs.append(div);
+      });
     });
   }
 
   let editIcon = document.querySelectorAll('.editIcon');
   editIcon.forEach((e) => {
     e.addEventListener('click', (e) => {
+      e.stopPropagation();
       editFolderModal.style.display = 'block';
       current_Id = e.currentTarget.getAttribute('id');
 
@@ -143,19 +137,16 @@ function createFolders() {
     });
   });
 
-
   let deleteIcon = document.querySelectorAll('.deleteIcon');
   deleteIcon.forEach((e) => {
     e.addEventListener('click', (e) => {
+      e.stopPropagation();
       deleteFolderModal.style.display = 'block';
       console.log('a');
       current_Id_forDelete = e.currentTarget.getAttribute('id');
     });
   });
-
-
 }
-
 
 deleteFolderBtn.addEventListener('click', () => {
   let dataArr = JSON.parse(localStorage.getItem('data'));
@@ -167,7 +158,7 @@ deleteFolderBtn.addEventListener('click', () => {
   });
   localStorage.setItem('data', JSON.stringify(newDataArr));
   createFolders();
-})
+});
 
 cancelDeleteFolderModal.addEventListener('click', () => {
   deleteFolderModal.style.display = 'none';
@@ -178,17 +169,13 @@ deleteFolderBtn.addEventListener('click', () => {
 
 searchBar.addEventListener('keyup', function () {
   query = searchBar.value;
-  searchFn(query)
-
-
-
-})
-
+  searchFn(query);
+});
 
 cancelBox.addEventListener('click', () => {
-  searchBar.value = ''
-  searchFn('')
-})
+  searchBar.value = '';
+  searchFn('');
+});
 
 //function to display and view relevant folders
 function searchFn(query) {
@@ -197,7 +184,6 @@ function searchFn(query) {
   dataArr.forEach((element) => {
     current_folder = document.getElementById(`${element.id}`);
     if (element.folderName.includes(query) || query === '') {
-
       current_folder.style.display = 'block';
     } else {
       current_folder.style.display = 'none';
