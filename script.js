@@ -43,7 +43,7 @@ createFolderBtn.addEventListener('click', (e) => {
     arrData.push(obj);
     localStorage.setItem('data', JSON.stringify(arrData));
   } else {
-      let newId = uid();
+    let newId = uid();
     let arrData = JSON.parse(folderListObj);
     let noOfFolders = arrData.length;
     let obj = {
@@ -62,7 +62,7 @@ cancelEditFolderModal.addEventListener('click', function () {
   editFolderModal.style.display = 'none';
 });
 editFolderBtn.addEventListener('click', () => {
- editFolderModal.style.display = 'none'
+  editFolderModal.style.display = 'none'
 });
 
 editFolderBtn.addEventListener('click', (e) => {
@@ -85,12 +85,12 @@ createFolders();
 function createFolders() {
   document.querySelector('.inner-folder-container').innerHTML = '';
   let newArr = JSON.parse(localStorage.getItem('data'));
- if (newArr) {
-   newArr.forEach((e) => {
-     let div = document.createElement('div');
-    div.classList.add('folderBox');
-    div.id = e.id;
-     div.innerHTML = `
+  if (newArr) {
+    newArr.forEach((e) => {
+      let div = document.createElement('div');
+      div.classList.add('folderBox');
+      div.id = e.id;
+      div.innerHTML = `
          <div class="editBox">
                 <div><span class="material-icons-outlined editIcon" id="${e.id}"> edit </span></div>
                 <div><span class="material-icons-outlined deleteIcon" id="${e.id}"> close </span></div>
@@ -100,8 +100,32 @@ function createFolders() {
               </div>
               <div class="folderName"> ${e.folderName}</div>
   `;
-     document.querySelector('.inner-folder-container').append(div);
-   });
+
+
+      document.querySelector('.inner-folder-container').append(div);
+
+      let folderBox = div;
+      folderBox.addEventListener('click', () => {
+        document.querySelector('.inner-folder-container').innerHTML = ``;
+        // clickedToGoInsideFolder_id = folderBox.getAttribute('id')
+
+        breadcrumbs = document.querySelector(".path-container")
+
+        let div = document.createElement('div');
+        div.classList.add('rootBox-contianer');
+        div.innerHTML = `
+  <div class="rootBox" id=${folderBox.id}>${folderBox.children[2].innerText}</div>
+  <span class="material-icons-outlined"> chevron_right </span>`
+
+        breadcrumbs.append(div)
+      })
+
+
+
+
+
+
+    });
   }
 
   let editIcon = document.querySelectorAll('.editIcon');
@@ -118,31 +142,31 @@ function createFolders() {
       });
     });
   });
- 
- 
-let deleteIcon = document.querySelectorAll('.deleteIcon');
-deleteIcon.forEach((e) => {
-  e.addEventListener('click', (e) => {
-    deleteFolderModal.style.display = 'block';
-    console.log('a');
-    current_Id_forDelete = e.currentTarget.getAttribute('id');
+
+
+  let deleteIcon = document.querySelectorAll('.deleteIcon');
+  deleteIcon.forEach((e) => {
+    e.addEventListener('click', (e) => {
+      deleteFolderModal.style.display = 'block';
+      console.log('a');
+      current_Id_forDelete = e.currentTarget.getAttribute('id');
+    });
   });
-});
- 
- 
+
+
 }
 
 
 deleteFolderBtn.addEventListener('click', () => {
-    let dataArr = JSON.parse(localStorage.getItem('data'));
-    let newDataArr = [];
-    dataArr.forEach((element) => {
-      if (element.id != current_Id_forDelete) {
-        newDataArr.push(element);
-      }
-    });
- localStorage.setItem('data', JSON.stringify(newDataArr));
- createFolders();
+  let dataArr = JSON.parse(localStorage.getItem('data'));
+  let newDataArr = [];
+  dataArr.forEach((element) => {
+    if (element.id != current_Id_forDelete) {
+      newDataArr.push(element);
+    }
+  });
+  localStorage.setItem('data', JSON.stringify(newDataArr));
+  createFolders();
 })
 
 cancelDeleteFolderModal.addEventListener('click', () => {
@@ -153,8 +177,8 @@ deleteFolderBtn.addEventListener('click', () => {
 });
 
 searchBar.addEventListener('keyup', function () {
- query = searchBar.value;
- searchFn(query)
+  query = searchBar.value;
+  searchFn(query)
 
 
 
@@ -162,8 +186,8 @@ searchBar.addEventListener('keyup', function () {
 
 
 cancelBox.addEventListener('click', () => {
- searchBar.value = ''
- searchFn('')
+  searchBar.value = ''
+  searchFn('')
 })
 
 //function to display and view relevant folders
@@ -173,7 +197,7 @@ function searchFn(query) {
   dataArr.forEach((element) => {
     current_folder = document.getElementById(`${element.id}`);
     if (element.folderName.includes(query) || query === '') {
-   
+
       current_folder.style.display = 'block';
     } else {
       current_folder.style.display = 'none';
