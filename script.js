@@ -4,7 +4,6 @@ let canceladdFolderModal = document.querySelector('#canceladdFolderModal');
 let createFolderBtn = document.querySelector('#createFolderBtn');
 let cancelBox = document.querySelector('.cancelBox');
 
-
 let editFolderModal = document.querySelector('#editFolderModal');
 let editFolderInput = document.querySelector('#renameFolderInput');
 let cancelEditFolderModal = document.querySelector('#cancelEditFolderModal');
@@ -36,17 +35,19 @@ createFolderBtn.addEventListener('click', (e) => {
   let arrData = [];
   let folderListObj = localStorage.getItem('data');
   if (!folderListObj) {
+    let newId = uid()
     let obj = {
-      id: 0,
+      id: newId,
       folderName: folderName,
     };
     arrData.push(obj);
     localStorage.setItem('data', JSON.stringify(arrData));
   } else {
+      let newId = uid();
     let arrData = JSON.parse(folderListObj);
     let noOfFolders = arrData.length;
     let obj = {
-      id: noOfFolders,
+      id: newId,
       folderName: folderName,
     };
     arrData.push(obj);
@@ -171,7 +172,7 @@ function searchFn(query) {
   dataArr.forEach((element) => {
     current_folder = document.getElementById(`${element.id}`);
     if (element.folderName.includes(query) || query === '') {
-      // console.log(current_folder);
+   
       current_folder.style.display = 'block';
     } else {
       current_folder.style.display = 'none';
