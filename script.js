@@ -178,6 +178,7 @@ cancelBox.addEventListener('click', () => {
 });
 
 //function to display and view relevant folders
+
 function searchFn(query) {
   all_folders = document.querySelectorAll('.folderBox');
   let dataArr = JSON.parse(localStorage.getItem('data'));
