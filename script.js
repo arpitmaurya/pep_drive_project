@@ -21,7 +21,7 @@ let cancelDeleteFolderModal = document.querySelector(
 let current_Id;
 let current_Id_forDelete;
 let currentFolderName;
-let current_breadcrumb_id=" root";
+let current_breadcrumb_id="root";
 
 createBtn.addEventListener('click', function () {
   addFolderModal.style.display = 'block';
@@ -37,8 +37,8 @@ createFolderBtn.addEventListener('click', (e) => {
   let folderName = inputBox.value;
 
   let arrData = [];
-  console.log();
-  if (!JSON.parse(localStorage.getItem('data'))) {
+  // console.log();
+  if (!JSON.parse(localStorage.getItem('data')) || JSON.parse(localStorage.getItem('data')).length==0) {
     let obj = {
       id: uid(),
       folderName: folderName,
@@ -51,17 +51,19 @@ createFolderBtn.addEventListener('click', (e) => {
     // console.log(folderListObj);
 
     let breadcrumb = document.querySelectorAll('.rootBox');
-
+    console.log("list of breadcrumbs", breadcrumb)
     breadcrumb.forEach((e) => {
       console.log(e.id+" "+current_breadcrumb_id);
-      if (e.id == current_breadcrumb_id) {
+      if (e.id.trim() == current_breadcrumb_id.trim()) {
       //  For Inside Folder
+      console.log("Check repitition", e.id.trim(), current_breadcrumb_id.trim());
         abc(current_breadcrumb_id, folderListObj );
-     } else {
-      //  For Root 
-       abc(current_breadcrumb_id, folderListObj );
+     } 
+    // else if () {
+    //   //  For Root 
+    //    abc(current_breadcrumb_id, folderListObj );
        
-      }
+    //   }
     });
   }
 
@@ -69,14 +71,15 @@ createFolderBtn.addEventListener('click', (e) => {
   addFolderModal.style.display = 'None';
   createFolders();
 });
-
 function abc(current_breadcrumb_id, folderListObj) {
- 
+  counter=0
+  
   let dataArr = JSON.parse(folderListObj);
-  console.log(dataArr);
+  // console.log(dataArr);
   dataArr.forEach((e) => {
-     console.log(current_breadcrumb_id);
-    console.log(e.id);
+   
+    console.log("Breaadcrumb",current_breadcrumb_id);
+    console.log("E id",e.id);
     if (e.id == current_breadcrumb_id) {
       let inputBox = document.querySelector('#createFolderInput');
       console.log('not root');
@@ -94,9 +97,12 @@ function abc(current_breadcrumb_id, folderListObj) {
       e.children = childrenArr;
       localStorage.setItem('data', JSON.stringify(dataArr));
     }
-    else { //work inside root directory
+    else if (current_breadcrumb_id.trim() == 'root' && counter==0) {
+      console.log(counter, e.id, current_breadcrumb_id);
+      counter++;
+      //work inside root directory
       let inputBox = document.querySelector('#createFolderInput');
-
+      console.log('Working inside root');
       let folderName = inputBox.value;
       let newId = uid();
       let obj = {
@@ -106,7 +112,7 @@ function abc(current_breadcrumb_id, folderListObj) {
       };
 
       dataArr.push(obj);
-      localStorage.setItem('data', JSON.stringify(dataArr));  
+      localStorage.setItem('data', JSON.stringify(dataArr));
     }
   });
 }
@@ -158,7 +164,7 @@ function createFolders() {
       let folderBox = div;
       folderBox.addEventListener('click', () => {
         current_breadcrumb_id = folderBox.id;
-        console.log(current_breadcrumb_id);
+        // console.log(current_breadcrumb_id);
         document.querySelector('.inner-folder-container').innerHTML = ``;
         // clickedToGoInsideFolder_id = folderBox.getAttribute('id')
 
