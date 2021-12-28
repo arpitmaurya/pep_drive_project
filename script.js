@@ -21,6 +21,7 @@ let cancelDeleteFolderModal = document.querySelector(
 let current_Id;
 let current_Id_forDelete;
 let currentFolderName;
+let current_breadcrumb_id=" root";
 
 createBtn.addEventListener('click', function () {
   addFolderModal.style.display = 'block';
@@ -29,34 +30,84 @@ canceladdFolderModal.addEventListener('click', function () {
   addFolderModal.style.display = 'none';
 });
 
+// localStorage.setItem('data', JSON.stringify([]));
 createFolderBtn.addEventListener('click', (e) => {
   let inputBox = document.querySelector('#createFolderInput');
+
   let folderName = inputBox.value;
+
   let arrData = [];
-  let folderListObj = localStorage.getItem('data');
-  if (!folderListObj) {
-    let newId = uid();
+  console.log();
+  if (!JSON.parse(localStorage.getItem('data'))) {
     let obj = {
-      id: newId,
+      id: uid(),
       folderName: folderName,
+      children: [],
     };
-    arrData.push(obj);
-    localStorage.setItem('data', JSON.stringify(arrData));
+
+    localStorage.setItem('data', JSON.stringify([obj]));
   } else {
-    let newId = uid();
-    let arrData = JSON.parse(folderListObj);
-    let noOfFolders = arrData.length;
-    let obj = {
-      id: newId,
-      folderName: folderName,
-    };
-    arrData.push(obj);
-    localStorage.setItem('data', JSON.stringify(arrData));
+    let folderListObj = localStorage.getItem('data');
+    // console.log(folderListObj);
+
+    let breadcrumb = document.querySelectorAll('.rootBox');
+
+    breadcrumb.forEach((e) => {
+      console.log(e.id+" "+current_breadcrumb_id);
+      // if (current_breadcrumb_id == 'root') {
+        abc(current_breadcrumb_id, folderListObj);
+      // }
+      // else if (e.id == current_breadcrumb_id) {
+      //   abc(current_breadcrumb_id, folderListObj );
+      // }
+    });
   }
+
   inputBox.value = '';
   addFolderModal.style.display = 'None';
   createFolders();
 });
+
+function abc(current_breadcrumb_id, folderListObj) {
+ 
+  let dataArr = JSON.parse(folderListObj);
+  console.log(dataArr);
+  dataArr.forEach((e) => {
+     console.log(current_breadcrumb_id);
+    console.log(e.id);
+    if (e.id == current_breadcrumb_id) {
+      let inputBox = document.querySelector('#createFolderInput');
+console.log('not root');
+      let folderName = inputBox.value;
+
+      let childrenArr = e.children;
+      let newId = uid();
+      let obj = {
+        id: newId,
+        folderName: folderName,
+        children: [],
+      };
+      childrenArr.push(obj);
+
+      e.children = childrenArr;
+      localStorage.setItem('data', JSON.stringify(dataArr));
+    }
+    else { //work inside root directory
+      let inputBox = document.querySelector('#createFolderInput');
+
+      let folderName = inputBox.value;
+      let newId = uid();
+      let obj = {
+        id: newId,
+        folderName: folderName,
+        children: [],
+      };
+
+      dataArr.push(obj);
+      localStorage.setItem('data', JSON.stringify(dataArr));  
+    }
+  });
+}
 
 cancelEditFolderModal.addEventListener('click', function () {
   editFolderModal.style.display = 'none';
@@ -68,14 +119,11 @@ editFolderBtn.addEventListener('click', () => {
 editFolderBtn.addEventListener('click', (e) => {
   let dataArr = JSON.parse(localStorage.getItem('data'));
   dataArr.forEach((element) => {
-    console.log(element.id);
     if (element.id == current_Id) {
       element.folderName = editFolderInput.value;
-      console.log(element.folderName);
     }
   });
 
-  console.log(dataArr);
   localStorage.setItem('data', JSON.stringify(dataArr));
 
   createFolders();
@@ -84,7 +132,9 @@ editFolderBtn.addEventListener('click', (e) => {
 createFolders();
 function createFolders() {
   document.querySelector('.inner-folder-container').innerHTML = '';
+
   let newArr = JSON.parse(localStorage.getItem('data'));
+
   if (newArr) {
     newArr.forEach((e) => {
       let div = document.createElement('div');
@@ -105,6 +155,8 @@ function createFolders() {
 
       let folderBox = div;
       folderBox.addEventListener('click', () => {
+        current_breadcrumb_id = folderBox.id;
+        console.log(current_breadcrumb_id);
         document.querySelector('.inner-folder-container').innerHTML = ``;
         // clickedToGoInsideFolder_id = folderBox.getAttribute('id')
 
@@ -142,7 +194,6 @@ function createFolders() {
     e.addEventListener('click', (e) => {
       e.stopPropagation();
       deleteFolderModal.style.display = 'block';
-      console.log('a');
       current_Id_forDelete = e.currentTarget.getAttribute('id');
     });
   });
@@ -178,7 +229,7 @@ cancelBox.addEventListener('click', () => {
 });
 
 //function to display and view relevant folders
-// wsiubviuvuifviue
+
 function searchFn(query) {
   all_folders = document.querySelectorAll('.folderBox');
   let dataArr = JSON.parse(localStorage.getItem('data'));
