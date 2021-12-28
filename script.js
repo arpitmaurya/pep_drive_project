@@ -23,6 +23,23 @@ let current_Id_forDelete;
 let currentFolderName;
 let current_breadcrumb_id="root";
 
+let rootBreadcrumb = document.querySelector('#root')
+rootBreadcrumb.addEventListener('click', function () {
+  current_breadcrumb_id = 'root';
+  document.querySelector('.inner-folder-container').innerHTML = ``;
+  createFolders();  
+
+   breadcrumbs_list = document.querySelectorAll('.rootBox');
+   breadcrumbs_list.forEach((e) => {
+     if (e.id != 'root') {
+       console.log('Breadcrumb removal');
+       console.log(e.parentElement);
+       e.parentElement.remove();
+     }
+   });
+})
+
+
 createBtn.addEventListener('click', function () {
   addFolderModal.style.display = 'block';
 });
@@ -141,7 +158,7 @@ editFolderBtn.addEventListener('click', (e) => {
 createFolders();
 function createFolders() {
   let dataArr=JSON.parse(localStorage.getItem('data'));
-  childArr = dfsExt(current_breadcrumb_id, dataArr);
+  childArr = dfsExt(current_breadcrumb_id, dataArr);  
 
   document.querySelector('.inner-folder-container').innerHTML = '';
   let newArr;
@@ -188,7 +205,24 @@ function createFolders() {
         div.innerHTML = `
   <div class="rootBox" id=${folderBox.id}>${folderBox.children[2].innerText}</div>
   <span class="material-icons-outlined"> chevron_right </span>`;
-
+        div.id = folderBox.id;
+        //adding listener to breadcrumbs
+        div.addEventListener('click', () => {
+          console.log(div.id);
+          current_breadcrumb_id = div.id;
+          document.querySelector('.inner-folder-container').innerHTML = ``;
+          createFolders();
+          breadcrumbs_list = document.querySelectorAll('.rootBox')
+          breadcrumbs_list.forEach((e) => {
+            if (e.id != div.id && e.id!='root') {
+              console.log("Breadcrumb removal");
+              console.log(e.parentElement);
+              e.parentElement.remove();
+            }
+          })
+          
+        })
+        
         breadcrumbs.append(div);
       });
     });
