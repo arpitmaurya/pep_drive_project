@@ -54,12 +54,14 @@ createFolderBtn.addEventListener('click', (e) => {
 
     breadcrumb.forEach((e) => {
       console.log(e.id+" "+current_breadcrumb_id);
-      // if (current_breadcrumb_id == 'root') {
-        abc(current_breadcrumb_id, folderListObj);
-      // }
-      // else if (e.id == current_breadcrumb_id) {
-      //   abc(current_breadcrumb_id, folderListObj );
-      // }
+      if (e.id == current_breadcrumb_id) {
+      //  For Inside Folder
+        abc(current_breadcrumb_id, folderListObj );
+     } else {
+      //  For Root 
+       abc(current_breadcrumb_id, folderListObj );
+       
+      }
     });
   }
 
@@ -77,7 +79,7 @@ function abc(current_breadcrumb_id, folderListObj) {
     console.log(e.id);
     if (e.id == current_breadcrumb_id) {
       let inputBox = document.querySelector('#createFolderInput');
-console.log('not root');
+      console.log('not root');
       let folderName = inputBox.value;
 
       let childrenArr = e.children;
