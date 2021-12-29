@@ -148,9 +148,12 @@ editFolderBtn.addEventListener('click', () => {
 
 editFolderBtn.addEventListener('click', (e) => {
   let dataArr = JSON.parse(localStorage.getItem('data'));
-  dataArr.forEach((element) => {
+  let childArr = dfsExt(current_breadcrumb_id, dataArr)
+  // console.log(childArr, current_Id);
+  childArr.forEach((element) => {
+    // console.log(element.id, current_Id);
     if (element.id == current_Id) {
-      element.folderName = editFolderInput.value;
+      element.folderName= editFolderInput.value
     }
   });
 
@@ -161,7 +164,7 @@ editFolderBtn.addEventListener('click', (e) => {
 
 createFolders();
 function createFolders() {
-  breadcrumb_flag=false
+  breadcrumb_flag = false
   let dataArr = JSON.parse(localStorage.getItem('data'));
   childArr = []
   childArr = dfsExt(current_breadcrumb_id, dataArr);
@@ -224,15 +227,15 @@ function createFolders() {
           createFolders();
           breadcrumbs_list = document.querySelectorAll('.rootBox')
 
-          
+
           breadcrumbs_list.forEach((e) => {
-            if (e.id != div.id && e.id != 'root' && breadcrumb_flag==true) {
+            if (e.id != div.id && e.id != 'root' && breadcrumb_flag == true) {
               // console.log("Breadcrumb removal");
               // console.log(e.parentElement);
               e.parentElement.remove();
             }
-            else if(e.id==div.id){
-              breadcrumb_flag=true
+            else if (e.id == div.id) {
+              breadcrumb_flag = true
             }
           })
 
@@ -252,7 +255,10 @@ function createFolders() {
       current_Id = e.currentTarget.getAttribute('id');
 
       let dataArr = JSON.parse(localStorage.getItem('data'));
-      dataArr.forEach((element) => {
+      let childArr = dfsExt(current_breadcrumb_id, dataArr)
+      // console.log(childArr, current_Id);
+      childArr.forEach((element) => {
+        // console.log(element.id, current_Id);
         if (element.id == current_Id) {
           editFolderInput.value = element.folderName;
         }
@@ -266,19 +272,26 @@ function createFolders() {
       e.stopPropagation();
       deleteFolderModal.style.display = 'block';
       current_Id_forDelete = e.currentTarget.getAttribute('id');
+      console.log(current_Id_forDelete);
     });
   });
 }
 
 deleteFolderBtn.addEventListener('click', () => {
+
   let dataArr = JSON.parse(localStorage.getItem('data'));
+  let childArr = dfsExt(current_breadcrumb_id, dataArr)
   let newDataArr = [];
-  dataArr.forEach((element) => {
-    if (element.id != current_Id_forDelete) {
-      newDataArr.push(element);
+  console.log(childArr);
+  childArr.forEach((element, index, object) => {
+    console.log(element.id, current_Id_forDelete, index, object);
+    if (element.id == current_Id_forDelete) {
+      object.splice(index, 1);
     }
   });
-  localStorage.setItem('data', JSON.stringify(newDataArr));
+
+  
+  localStorage.setItem('data', JSON.stringify(dataArr));
   createFolders();
 });
 
@@ -357,9 +370,9 @@ function dfsInt(current_breadcrumb_id, childrenArr) {
 function dfsStoreExt(e, current_breadcrumb_id, dataArr) {
   // console.log(e.id == current_breadcrumb_id);
   console.log(e.children, e.children.length, e.id, e.folderName, current_breadcrumb_id);
-  if (e.id == current_breadcrumb_id && (e.children.length==0 || !e.children)) {
+  if (e.id == current_breadcrumb_id && (e.children.length == 0 || !e.children)) {
     let inputBox = document.querySelector('#createFolderInput');
-    console.log("First folder in ",e.folderName);
+    console.log("First folder in ", e.folderName);
     let folderName = inputBox.value;
     let newId = uid();
     let obj = {
@@ -374,9 +387,9 @@ function dfsStoreExt(e, current_breadcrumb_id, dataArr) {
 
     localStorage.setItem('data', JSON.stringify(dataArr));
   }
-  else if(e.id == current_breadcrumb_id ){
+  else if (e.id == current_breadcrumb_id) {
     let inputBox = document.querySelector('#createFolderInput');
-    console.log("New folder in ",e.folderName);
+    console.log("New folder in ", e.folderName);
     let folderName = inputBox.value;
     let newId = uid();
     let obj = {
