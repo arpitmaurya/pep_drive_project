@@ -148,14 +148,25 @@ editFolderBtn.addEventListener('click', () => {
 
 editFolderBtn.addEventListener('click', (e) => {
   let dataArr = JSON.parse(localStorage.getItem('data'));
-  let childArr = dfsExt(current_breadcrumb_id, dataArr)
-  // console.log(childArr, current_Id);
-  childArr.forEach((element) => {
-    // console.log(element.id, current_Id);
-    if (element.id == current_Id) {
-      element.folderName= editFolderInput.value
-    }
-  });
+
+
+  if (current_breadcrumb_id == 'root') {
+    dataArr.forEach((element) => {
+      if (element.id == current_Id) {
+        element.folderName = editFolderInput.value;
+      }
+    });
+  }
+  else {
+    let childArr = dfsExt(current_breadcrumb_id, dataArr)
+    // console.log(childArr, current_Id);
+    childArr.forEach((element) => {
+      // console.log(element.id, current_Id);
+      if (element.id == current_Id) {
+        element.folderName = editFolderInput.value
+      }
+    });
+  }
 
   localStorage.setItem('data', JSON.stringify(dataArr));
 
@@ -254,15 +265,29 @@ function createFolders() {
       editFolderModal.style.display = 'block';
       current_Id = e.currentTarget.getAttribute('id');
 
+
+
+
       let dataArr = JSON.parse(localStorage.getItem('data'));
-      let childArr = dfsExt(current_breadcrumb_id, dataArr)
-      // console.log(childArr, current_Id);
-      childArr.forEach((element) => {
-        // console.log(element.id, current_Id);
-        if (element.id == current_Id) {
-          editFolderInput.value = element.folderName;
-        }
-      });
+
+      if (current_breadcrumb_id == 'root') {
+        dataArr.forEach((element) => {
+          if (element.id == current_Id) {
+            editFolderInput.value = element.folderName;
+          }
+        });
+      }
+      else {
+
+        let childArr = dfsExt(current_breadcrumb_id, dataArr)
+        // console.log(childArr, current_Id);
+        childArr.forEach((element) => {
+          // console.log(element.id, current_Id);
+          if (element.id == current_Id) {
+            editFolderInput.value = element.folderName;
+          }
+        });
+      }
     });
   });
 
@@ -279,19 +304,33 @@ function createFolders() {
 
 deleteFolderBtn.addEventListener('click', () => {
 
-  let dataArr = JSON.parse(localStorage.getItem('data'));
-  let childArr = dfsExt(current_breadcrumb_id, dataArr)
-  let newDataArr = [];
-  console.log(childArr);
-  childArr.forEach((element, index, object) => {
-    console.log(element.id, current_Id_forDelete, index, object);
-    if (element.id == current_Id_forDelete) {
-      object.splice(index, 1);
-    }
-  });
 
-  
-  localStorage.setItem('data', JSON.stringify(dataArr));
+
+  let dataArr = JSON.parse(localStorage.getItem('data'));
+
+  if (current_breadcrumb_id == 'root') {
+    let newDataArr = [];
+    dataArr.forEach((element) => {
+      if (element.id != current_Id_forDelete) {
+        newDataArr.push(element);
+      }
+    });
+    localStorage.setItem('data', JSON.stringify(newDataArr));
+  }
+  else {
+    let childArr = dfsExt(current_breadcrumb_id, dataArr)
+    let newDataArr = [];
+    console.log(childArr);
+    childArr.forEach((element, index, object) => {
+      console.log(element.id, current_Id_forDelete, index, object);
+      if (element.id == current_Id_forDelete) {
+        object.splice(index, 1);
+      }
+    });
+
+
+    localStorage.setItem('data', JSON.stringify(dataArr));
+  }
   createFolders();
 });
 
