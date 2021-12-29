@@ -28,6 +28,7 @@ rootBreadcrumb.addEventListener('click', function () {
   current_breadcrumb_id = 'root';
   document.querySelector('.inner-folder-container').innerHTML = ``;
   createFolders();
+  searchFn(searchBar.value);
 
   breadcrumbs_list = document.querySelectorAll('.rootBox');
   breadcrumbs_list.forEach((e) => {
@@ -83,6 +84,8 @@ createFolderBtn.addEventListener('click', (e) => {
   inputBox.value = '';
   addFolderModal.style.display = 'None';
   createFolders();
+  searchFn(searchBar.value);
+  
 });
 function abc(current_breadcrumb_id, folderListObj) {
   counter = 0
@@ -171,6 +174,7 @@ editFolderBtn.addEventListener('click', (e) => {
   localStorage.setItem('data', JSON.stringify(dataArr));
 
   createFolders();
+  searchFn(searchBar.value);
 });
 
 createFolders();
@@ -236,6 +240,7 @@ function createFolders() {
           current_breadcrumb_id = div.id;
           document.querySelector('.inner-folder-container').innerHTML = ``;
           createFolders();
+          searchFn(searchBar.value);
           breadcrumbs_list = document.querySelectorAll('.rootBox')
 
 
@@ -254,6 +259,7 @@ function createFolders() {
 
         breadcrumbs.append(div);
         createFolders();
+        searchFn(searchBar.value);
       });
     });
   }
@@ -332,6 +338,7 @@ deleteFolderBtn.addEventListener('click', () => {
     localStorage.setItem('data', JSON.stringify(dataArr));
   }
   createFolders();
+  searchFn(searchBar.value);
 });
 
 cancelDeleteFolderModal.addEventListener('click', () => {
@@ -356,14 +363,30 @@ cancelBox.addEventListener('click', () => {
 function searchFn(query) {
   all_folders = document.querySelectorAll('.folderBox');
   let dataArr = JSON.parse(localStorage.getItem('data'));
-  dataArr.forEach((element) => {
-    current_folder = document.getElementById(`${element.id}`);
-    if (element.folderName.includes(query) || query === '') {
-      current_folder.style.display = 'block';
-    } else {
-      current_folder.style.display = 'none';
-    }
-  });
+  
+  if(current_breadcrumb_id == 'root'){
+    dataArr.forEach((element) => {
+      current_folder = document.getElementById(`${element.id}`);
+      if (element.folderName.includes(query) || query === '') {
+        current_folder.style.display = 'block';
+      } else {
+        current_folder.style.display = 'none';
+      }
+    });
+  }
+  else{
+
+    childArr = dfsExt(current_breadcrumb_id, dataArr)
+    childArr.forEach((element) => {
+      current_folder = document.getElementById(`${element.id}`);
+      if (element.folderName.includes(query) || query === '') {
+        current_folder.style.display = 'block';
+      } else {
+        current_folder.style.display = 'none';
+      }
+    });
+  }
+
 }
 
 // found_children=False
