@@ -16,8 +16,10 @@
 
     <link rel="stylesheet" href="./style.css" />
   </head>
+
   <body>
     <div class="main-container">
+      <!--  Header Added With SearchBox And Add Icon Start -->
       <div class="header-container">
         <div class="searchBox_and_addBox_container">
           <div class="searchBox">
@@ -32,17 +34,17 @@
             </div>
           </div>
           <button id="createBtn">
-            <span class="material-icons-outlined">
-              add
-              </span>
+            <span class="material-icons-outlined"> add </span>
           </button>
         </div>
-
       </div>
+      <!--  Header Added With SearchBox And Add Icon End -->
+
       <div class="content-container">
         <div class="path-container">
+          <!-- Each BreadCrumb Will Be Created Over Here Start  -->
           <div class="rootBox-contianer">
-            <div class="rootBox" id='root'>My drive</div>
+            <div class="rootBox" id="root">My drive</div>
             <span class="material-icons-outlined"> chevron_right </span>
           </div>
           
@@ -50,74 +52,106 @@
         <div class="folder-container">
           <div class="folder-navigation">Folder</div>
           <div class="inner-folder-container">
+            <!-- Folder_Box Will Be created over here  -->
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- BreadCrumb Template Start -->
+    <template id="temp-breadCrumb">
+      <div class="rootBox-contianer">
+        <div class="rootBox" id="root">My drive</div>
+        <span class="material-icons-outlined"> chevron_right </span>
+      </div>
+    </template>
+    <!-- BreadCrumb Template Start -->
 
-    <!-- /Rename Modal -->
-
-    <div class="modal" id="addFolderModal" >
-      <div class="innerModal">
-        <div class="nameText">
-         Add Folder
+    <!-- createFolderBox Template Start -->
+    <template id="temp-createFolderBox">
+      <div class="folderBox">
+        <div class="editBox">
+          <div>
+            <span class="material-icons-outlined editIcon" id="${e.id}">
+              edit
+            </span>
+          </div>
+          <div>
+            <span class="material-icons-outlined deleteIcon" id="${e.id}">
+              close
+            </span>
+          </div>
         </div>
+        <div class="folderIcon">
+          <span class="material-icons"> folder </span>
+        </div>
+        <div class="folderName">FolderName</div>
+      </div>
+    </template>
+    <!-- createFolderBox Template -->
+
+    <!-- AddFolder Modal start-->
+    <div class="modal" id="addFolderModal">
+      <div class="innerModal">
+        <div class="nameText">Add Folder</div>
         <div class="modal-inputBox">
-         <input id="createFolderInput" type="text" placeholder="Add Folder Name">
+          <input
+            id="createFolderInput"
+            type="text"
+            placeholder="Add Folder Name"
+            onfocus="this.select()"
+          />
         </div>
         <div class="cancel_confirm-box">
-         <div class="cancel-btn" id="canceladdFolderModal"> Cancel</div>
-         <div class="confirm-btn" id="createFolderBtn"> OK</div>
+          <div class="cancel-btn" id="canceladdFolderModal">Cancel</div>
+          <div class="confirm-btn" id="createFolderBtn">OK</div>
         </div>
       </div>
-    </div> 
+    </div>
+    <!-- AddFolder Modal End-->
 
-
-    <div class="modal" id="editFolderModal" >
+    <!-- Rename Modal Start-->
+    <div class="modal" id="editFolderModal">
       <div class="innerModal">
-        <div class="nameText">
-         Rename Folder
-        </div>
+        <div class="nameText">Rename Folder</div>
         <div class="modal-inputBox">
-         <input id="renameFolderInput" type="text" placeholder="Rename Folder ">
+          <input
+            id="renameFolderInput"
+            type="text"
+            placeholder="Rename Folder "
+             onfocus="this.select()"
+          />
         </div>
         <div class="cancel_confirm-box">
-         <div class="cancel-btn" id="cancelEditFolderModal"> Cancel</div>
-         <div class="confirm-btn" id="editFolderBtn"> OK</div>
+          <div class="cancel-btn" id="cancelEditFolderModal">Cancel</div>
+          <div class="confirm-btn" id="editFolderBtn">OK</div>
         </div>
       </div>
-    </div> 
+    </div>
+    <!-- Rename Modal End-->
 
-
-
-    <div class="modal" id="deleteFolderModal" >
+    <!-- DeleteFolderModal Start -->
+    <div class="modal" id="deleteFolderModal">
       <div class="innerModal">
-        <div class="nameText">
-         Delete Folder
-        </div>
-        <div class="modal-inputBox">
-          This folder will be deleted. Confirm?
-        </div>
+        <div class="nameText">Delete Folder</div>
+        <div class="modal-inputBox">This folder will be deleted. Confirm?</div>
         <div class="cancel_confirm-box">
-         <div class="cancel-btn" id="cancelDeleteFolderModal"> Cancel</div>
-         <div class="confirm-btn" id="deleteFolderBtn"> OK</div>
+          <div class="cancel-btn" id="cancelDeleteFolderModal">Cancel</div>
+          <div class="confirm-btn" id="deleteFolderBtn">OK</div>
         </div>
       </div>
-    </div> 
+    </div>
+    <!-- DeleteFolderModal End -->
 
-
-
-
-
-
-    <!-- Setting New Item -->
+    <!-- Create Unique ID Start -->
     <script src="https://cdn.jsdelivr.net/npm/short-unique-id@latest/dist/short-unique-id.min.js"></script>
-    
-      <script>
-        let uid = new ShortUniqueId();
-      </script>
-      
-    <!-- Setting New Item -->
+    <script>
+      let uid = new ShortUniqueId();
+    </script>
+    <!-- Create Unique ID End -->
+
+    <!-- Our JS File Start -->
     <script src="./script.js"></script>
+    <!-- Our JS File End -->
   </body>
 </html>
