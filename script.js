@@ -161,6 +161,7 @@ editFolderBtn.addEventListener('click', (e) => {
 
 createFolders();
 function createFolders() {
+  breadcrumb_flag=false
   let dataArr = JSON.parse(localStorage.getItem('data'));
   childArr = []
   childArr = dfsExt(current_breadcrumb_id, dataArr);
@@ -222,11 +223,16 @@ function createFolders() {
           document.querySelector('.inner-folder-container').innerHTML = ``;
           createFolders();
           breadcrumbs_list = document.querySelectorAll('.rootBox')
+
+          
           breadcrumbs_list.forEach((e) => {
-            if (e.id != div.id && e.id != 'root') {
+            if (e.id != div.id && e.id != 'root' && breadcrumb_flag==true) {
               // console.log("Breadcrumb removal");
               // console.log(e.parentElement);
               e.parentElement.remove();
+            }
+            else if(e.id==div.id){
+              breadcrumb_flag=true
             }
           })
 
