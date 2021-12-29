@@ -14,6 +14,8 @@ let deleteFolderModal = document.querySelector('#deleteFolderModal');
 
 let searchBar = document.querySelector('#searchBar');
 
+let menuFileOption = document.querySelector('.menu-FileOption');
+
 let cancelDeleteFolderModal = document.querySelector(
   '#cancelDeleteFolderModal'
 );
@@ -44,11 +46,9 @@ rootBreadcrumb.addEventListener('click', function () {
   });
 });
 
-//Listener to open the modal to create a folder and highlight text
-createBtn.addEventListener('click', function () {
-  addFolderModal.style.display = 'block';
-  document.querySelector('#createFolderInput').focus();
-});
+
+
+
 
 //Listener to close the Create Folder modal
 canceladdFolderModal.addEventListener('click', function () {
@@ -495,3 +495,28 @@ function dfsStoreInt(childFolder, current_breadcrumb_id, dataArr) {
     });
   }
 }
+
+
+
+// createBtn.addEventListener('click', function () {
+//   addFolderModal.style.display = 'block';
+//   document.querySelector('#createFolderInput').focus();
+// });
+
+//Listener to open the modal to create a folder and highlight text
+createBtn.addEventListener('click', function () {
+  menuFileOption.style.display = 'flex';
+  document
+    .querySelector('.menu-createFolderBtn')
+    .addEventListener('click', () => {
+        menuFileOption.style.display = 'none';
+      addFolderModal.style.display = 'block';
+      document.querySelector('#createFolderInput').focus();
+    });
+
+});
+
+document.querySelector('.content-container').addEventListener('click', () => {
+  console.log('A');
+  menuFileOption.style.display = 'none';
+});

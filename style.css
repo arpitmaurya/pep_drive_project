@@ -409,7 +409,7 @@ body {
   align-items: center;
   gap: 1rem;
   border-bottom: 1px solid #e7e9eb;
-   cursor: pointer;
+  cursor: pointer;
 }
 .menu-multiple-box {
   height: 2.5rem;
@@ -450,4 +450,66 @@ body {
 }
 .sheetIcon {
   color: #0f9d58;
+}
+
+#doc_modal {
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  transform: translate(-50%);
+  height: 80%;
+  width: 70%;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.doc-header {
+  height: 4rem;
+  width: 100%;
+  display: flex;
+  border-bottom: 2px solid #dee0e3;
+}
+
+.doc-modal-icon {
+  height: 100%;
+  width: 4rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.doc-modal-icon span {
+  font-size: 3.3rem;
+}
+
+.doc_folferName_Menu_container {
+  height: 100%;
+  width: 100%;
+}
+
+.folderName-text{
+  height: 50%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.folderName-innerText{
+  height: 90%;
+  width: 12rem;
+  font-family: sans-serif;
+  display: flex;
+  align-items: center;
+  color: #7e7e7e;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding-left: 0.5rem;
+}
+.folderName-innerText:hover{
+  border: 1px solid rgba(128, 128, 128, 0.829);
+}
+.doc-inner-menu{
+  height: 50%;
+  width: 100%;
 }
