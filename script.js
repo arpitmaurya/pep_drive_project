@@ -248,7 +248,8 @@ function displayFolders() {
       else if(e.fileName && e.ext==".txt"){
         clone.querySelector('.folderName').innerText = e.fileName;
         iconSelector.style.fontSize = "65px"
-        iconSelector.innerHTML="description"
+        iconSelector.innerHTML = "description"
+        iconSelector.style.color = '#4285f4';
       }
 
 
