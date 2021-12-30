@@ -6,7 +6,7 @@ function setData(value) {
 }
 
 function getData() {
-    if(!JSON.parse(localStorage.getItem('data'))){
+    if (!JSON.parse(localStorage.getItem('data'))) {
         setData([])
         return getData()
     }
@@ -15,7 +15,7 @@ function getData() {
 
 function getCurrentFoldersChildren() {
     let dataArr = getData()
-    if(!dataArr){
+    if (!dataArr) {
         setData([])
         return getData()
     }
@@ -37,15 +37,16 @@ function storeNotepadFile() {
 
 
     //Handle creation of notepad file in the root directory
-    if(current_breadcrumb_id.trim() == 'root' && dataArr.length==0){ //Case: Root directory is empty
-        if (counter==0){
+    if (current_breadcrumb_id.trim() == 'root' && dataArr.length == 0) { //Case: Root directory is empty
+        if (counter == 0) {
             counter++;
             //work inside root directory
             let inputBox = document.querySelector('.header_folderName');
             let fontSize = document.querySelector('.textSizeValue').innerHTML
             let fontFamily = document.querySelector('#fontOption').value;
             let content = document.querySelector('#notepadTextArea').value
-            console.log(content);
+            let bold=document.querySelector('#notepadTextArea').style.fontWeight;
+            let italic = document.querySelector('#notepadTextArea').style.fontStyle;
 
             var fileName = inputBox.value;
             let newId = uid();
@@ -54,6 +55,8 @@ function storeNotepadFile() {
                 fileName: fileName,
                 fontSize: fontSize,
                 fontFamily: fontFamily,
+                bold:bold,
+                italic: italic,
                 content: content,
                 ext: ".txt"
             };
@@ -65,7 +68,7 @@ function storeNotepadFile() {
         }
 
     }
-    
+
     dataArr.forEach((e) => { //Case: Root directory is not empty
         if (current_breadcrumb_id.trim() == 'root' && counter == 0) {
             counter++;
@@ -74,6 +77,10 @@ function storeNotepadFile() {
             let fontSize = document.querySelector('.textSizeValue').innerHTML
             let fontFamily = document.querySelector('#fontOption').value;
             let content = document.querySelector('#notepadTextArea').value
+            let bold=document.querySelector('#notepadTextArea').style.fontWeight;
+            let italic = document.querySelector('#notepadTextArea').style.fontStyle;
+
+
             console.log(content);
 
             var fileName = inputBox.value;
@@ -83,6 +90,8 @@ function storeNotepadFile() {
                 fileName: fileName,
                 fontSize: fontSize,
                 fontFamily: fontFamily,
+                bold:bold,
+                italic: italic,
                 content: content,
                 ext: ".txt"
             };
@@ -161,7 +170,7 @@ function dfsStoreInt(childFolder, current_breadcrumb_id, dataArr) {
 //To store the new Notepad file in the appropriate sub-folder using DFS
 
 function dfsNotepadExt(e, current_breadcrumb_id, dataArr) {
-    console.log(current_breadcrumb_id, dataArr);
+    // console.log(current_breadcrumb_id, dataArr);
     if (
         e.id == current_breadcrumb_id &&
         (e.children.length == 0 || !e.children)
@@ -170,7 +179,9 @@ function dfsNotepadExt(e, current_breadcrumb_id, dataArr) {
         let fontSize = document.querySelector('.textSizeValue').innerHTML
         let fontFamily = document.querySelector('#fontOption').value;
         let content = document.querySelector('#notepadTextArea').value
-
+        let bold=document.querySelector('#notepadTextArea').style.fontWeight;
+        let italic = document.querySelector('#notepadTextArea').style.fontStyle;
+        
         let fileName = inputBox.value;
         let newId = uid();
         let obj = {
@@ -178,6 +189,8 @@ function dfsNotepadExt(e, current_breadcrumb_id, dataArr) {
             fileName: fileName,
             fontSize: fontSize,
             fontFamily: fontFamily,
+            bold:bold,
+            italic: italic,
             content: content,
             ext: ".txt"
         };
@@ -187,7 +200,7 @@ function dfsNotepadExt(e, current_breadcrumb_id, dataArr) {
 
         // localStorage.setItem('data', JSON.stringify(dataArr));
         // database.data = dataArr
-        console.log("Set inside folder",e.folderName);
+        console.log("Set inside folder", e.folderName);
         setData(dataArr)
         displayFolders()
     } else if (e.id == current_breadcrumb_id) { //sub folder is not empty
@@ -206,9 +219,9 @@ function dfsNotepadExt(e, current_breadcrumb_id, dataArr) {
             content: content,
             ext: ".txt"
         };
-        
+
         e.children.push(obj);
-        
+
         setData(dataArr)
         displayFolders()
     } else {
@@ -220,6 +233,57 @@ function dfsNotepadInt(childFolder, current_breadcrumb_id, dataArr) {
     if (childFolder) {
         childFolder.forEach((e) => {
             dfsNotepadExt(e, current_breadcrumb_id, dataArr);
+        });
+    }
+}
+
+//open the file
+function openFile(id, name) {
+    let dataArr=getData()
+    // console.log(dataArr);
+    let fileData = getFileDataExt(id, name, dataArr)
+    console.log(fileData);
+    // if (fileData.fileName.endsWith(".txt")) {
+    //     //open Notepad modal with filedata
+
+    //     //remove listener on save button
+
+    //     //keyup event to constantly write data
+    // }
+}
+
+//get a file's data using DFS
+let resultFileData;
+function getFileDataExt(id, name, dataArr) {
+    
+    dataArr.forEach((e) => {
+        console.log(e.id, id);
+        if (e.id == id) {
+            //If relevant folder has been found
+
+            if (!resultFileData) {
+                //condition put to not let undefined result override the actual result
+                resultFileData = e;
+            } else if (e) {
+                //update the children array and return it
+                resultFileData = e;
+            }
+        } else if(e.folderName) {
+            //Search in the child folder
+            getFileDataInt(id, name, e.children);
+        }else{ //some other file encountered
+            
+        }
+    });
+    return resultFileData;
+}
+
+function getFileDataInt(id, name, childFolder) {
+    console.log(childFolder);
+    if (childFolder) {
+        childFolder.forEach((e) => {
+            console.log(e.id);
+            getFileDataExt(id, name, childFolder);
         });
     }
 }
