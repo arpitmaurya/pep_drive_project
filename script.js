@@ -81,7 +81,7 @@ function createFolderFunction() {
 
   //condition to handle the case where there is no data at all, or the array is empty
   if (
-    !getData() || getData().length == 0 
+    !getData() || getData().length == 0
   ) {
     let obj = {
       id: uid(),
@@ -238,7 +238,21 @@ function displayFolders() {
       });
       let folderBox = clone.querySelector('.folderBox');
       folderBox.setAttribute('id', e.id);
-      clone.querySelector('.folderName').innerText = e.folderName;
+
+      let iconSelector = clone.querySelector('.folderIcon .material-icons')
+      
+      if(e.folderName){
+        clone.querySelector('.folderName').innerText = e.folderName;
+        iconSelector.innerHTML="folder"
+      }
+      else if(e.fileName && e.ext==".txt"){
+        clone.querySelector('.folderName').innerText = e.fileName;
+        iconSelector.style.fontSize = "65px"
+        iconSelector.innerHTML="description"
+      }
+
+
+      // clone.querySelector('.folderName').innerText = e.folderName;
       document.querySelector('.inner-folder-container').appendChild(clone);
 
       // -------------------------------------------
@@ -408,9 +422,13 @@ function searchFn(query) {
   if (current_breadcrumb_id == 'root') {
     dataArr.forEach((element) => {
       current_folder = document.getElementById(`${element.id}`);
-      if (element.folderName.includes(query) || query === '') {
+      if (element.folderName && element.folderName.includes(query) || query === '') {
         current_folder.style.display = 'block';
-      } else {
+      } 
+       else if(element.fileName && element.fileName.includes(query) || query === ''){
+        current_folder.style.display = 'block';
+       }
+       else{
         current_folder.style.display = 'none';
       }
     });
@@ -418,9 +436,14 @@ function searchFn(query) {
     childArr = dfsExt(current_breadcrumb_id, dataArr);
     childArr.forEach((element) => {
       current_folder = document.getElementById(`${element.id}`);
-      if (element.folderName.includes(query) || query === '') {
+
+      if (element.folderName && element.folderName.includes(query) || query === '') {
         current_folder.style.display = 'block';
-      } else {
+      } 
+       else if(element.fileName && element.fileName.includes(query) || query === ''){
+        current_folder.style.display = 'block';
+       }
+       else{
         current_folder.style.display = 'none';
       }
     });
@@ -468,67 +491,7 @@ function dfsInt(current_breadcrumb_id, childrenArr) {
   }
 }
 
-//To store the new folder in the appropriate sub-folder using DFS
-function dfsStoreExt(e, current_breadcrumb_id, dataArr) {
-  // console.log(e.id == current_breadcrumb_id);
-  console.log(
-    e.children,
-    e.children.length,
-    e.id,
-    e.folderName,
-    current_breadcrumb_id
-  );
-  if (
-    e.id == current_breadcrumb_id &&
-    (e.children.length == 0 || !e.children)
-  ) {
-    let inputBox = document.querySelector('#createFolderInput');
-    console.log('First folder in ', e.folderName);
-    let folderName = inputBox.value;
-    let newId = uid();
-    let obj = {
-      id: newId,
-      folderName: folderName,
-      children: [],
-    };
-    console.log(e);
-    console.log(e.children);
-    e.children = [obj];
-    console.log(e.children);
 
-    // localStorage.setItem('data', JSON.stringify(dataArr));
-    // database.data = dataArr
-    setData(dataArr)
-  } else if (e.id == current_breadcrumb_id) {
-    let inputBox = document.querySelector('#createFolderInput');
-    console.log('New folder in ', e.folderName);
-    let folderName = inputBox.value;
-    let newId = uid();
-    let obj = {
-      id: newId,
-      folderName: folderName,
-      children: [],
-    };
-    console.log(e);
-    console.log(e.children);
-    e.children.push(obj);
-    console.log(e.children);
-
-    // localStorage.setItem('data', JSON.stringify(dataArr));
-    // database.data = dataArr
-    setData(dataArr)
-  } else {
-    dfsStoreInt(e.children, current_breadcrumb_id, dataArr);
-  }
-}
-
-function dfsStoreInt(childFolder, current_breadcrumb_id, dataArr) {
-  if (childFolder) {
-    childFolder.forEach((e) => {
-      dfsStoreExt(e, current_breadcrumb_id, dataArr);
-    });
-  }
-}
 
 //Listener to open the modal to create a folder and highlight text
 createBtn.addEventListener('click', function () {
@@ -547,3 +510,9 @@ createBtn.addEventListener('click', function () {
 document.querySelector('.content-container').addEventListener('click', () => {
   menuFileOption.style.display = 'none';
 });
+
+
+
+function storeNewDataInFolder() {
+
+}
