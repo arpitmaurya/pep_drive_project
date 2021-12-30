@@ -30,6 +30,9 @@ let current_Id;
 let current_Id_forDelete;
 let currentFolderName;
 
+// console.log(database);
+
+
 //Setting a default ID for breadcrumb. This will be updated based on the folder we are traversing
 let current_breadcrumb_id = 'root';
 
@@ -78,8 +81,7 @@ function createFolderFunction() {
 
   //condition to handle the case where there is no data at all, or the array is empty
   if (
-    !JSON.parse(localStorage.getItem('data')) ||
-    JSON.parse(localStorage.getItem('data')).length == 0
+    !getData() || getData().length == 0 
   ) {
     let obj = {
       id: uid(),
@@ -87,11 +89,14 @@ function createFolderFunction() {
       children: [],
     };
 
-    localStorage.setItem('data', JSON.stringify([obj]));
+    // localStorage.setItem('data', JSON.stringify([obj]));
+    // database.data = [obj]
+    setData([obj])
+
   } else {
     //condition to handle the case where some data exists, and for nesting of folders
-    let folderListObj = localStorage.getItem('data');
-
+    let folderListObj = getData();
+    // console.log(folderListObj);
     let breadcrumb = document.querySelectorAll('.rootBox');
     //check for which subfolder to create the new folder in using breadcrumb's ID, which is the same as folder ID. This will be unique for every folder
     breadcrumb.forEach((e) => {
@@ -114,7 +119,9 @@ function createFolderFunction() {
 function storeFolder(current_breadcrumb_id, folderListObj) {
   counter = 0; //Placed a counter to handle repeated folder creation
 
-  let dataArr = JSON.parse(folderListObj);
+  // let dataArr = JSON.parse(folderListObj);
+  let dataArr = folderListObj;
+
 
   //Handle creation of folder in the root directory
   dataArr.forEach((e) => {
@@ -132,7 +139,9 @@ function storeFolder(current_breadcrumb_id, folderListObj) {
       };
 
       dataArr.push(obj);
-      localStorage.setItem('data', JSON.stringify(dataArr));
+      // localStorage.setItem('data', JSON.stringify(dataArr));
+      // database.data = dataArr
+      setData(dataArr)
     }
     //Handle creation of folder inside a sub-folder
     dfsStoreExt(e, current_breadcrumb_id, dataArr);
@@ -164,7 +173,9 @@ editFolderInput.addEventListener('keyup', (e) => {
 
 //Handle renaming Folder Name
 function editFolderName() {
-  let dataArr = JSON.parse(localStorage.getItem('data'));
+  // let dataArr = JSON.parse(localStorage.getItem('data'));
+  // let dataArr = database.data
+  let dataArr = getData()
   if (current_breadcrumb_id == 'root') {
     //Renaming in root. Simple Linear Search
     dataArr.forEach((element) => {
@@ -182,7 +193,10 @@ function editFolderName() {
       }
     });
   }
-  localStorage.setItem('data', JSON.stringify(dataArr));
+  // localStorage.setItem('data', JSON.stringify(dataArr));
+  // database.data = dataArr
+  setData(dataArr)
+
   //re-display the updated folder details
   displayFolders();
   searchFn(searchBar.value);
@@ -191,7 +205,10 @@ function editFolderName() {
 displayFolders(); //Calling it by default at the beginning of the process to display all folders in the root directory
 function displayFolders() {
   breadcrumb_flag = false;
-  let dataArr = JSON.parse(localStorage.getItem('data'));
+  // let dataArr = JSON.parse(localStorage.getItem('data'));
+  // let dataArr = database.data
+  let dataArr = getData()
+
   childArr = [];
   childArr = dfsExt(current_breadcrumb_id, dataArr); //Search for the folders in the current directory to find the children objects, which will be displayed on the screen
 
@@ -286,7 +303,9 @@ function displayFolders() {
       document.querySelector('#renameFolderInput').focus();
       current_Id = e.currentTarget.getAttribute('id');
 
-      let dataArr = JSON.parse(localStorage.getItem('data'));
+      // let dataArr = JSON.parse(localStorage.getItem('data'));
+      // let dataArr = database.data
+      let dataArr = getData()
 
       if (current_breadcrumb_id == 'root') {
         //Linear search in case of root folder
@@ -324,7 +343,9 @@ function displayFolders() {
 //Delete folder. Linear search for Root folder deletion.
 //DFS search for sub-folder deletion
 deleteFolderBtn.addEventListener('click', () => {
-  let dataArr = JSON.parse(localStorage.getItem('data'));
+  // let dataArr = JSON.parse(localStorage.getItem('data'));
+  // let dataArr = database.data
+  let dataArr = getData()
 
   if (current_breadcrumb_id == 'root') {
     let newDataArr = [];
@@ -333,7 +354,9 @@ deleteFolderBtn.addEventListener('click', () => {
         newDataArr.push(element);
       }
     });
-    localStorage.setItem('data', JSON.stringify(newDataArr));
+    // localStorage.setItem('data', JSON.stringify(newDataArr));
+    // database.data = newDataArr
+    setData(dataArr)
   } else {
     let childArr = dfsExt(current_breadcrumb_id, dataArr);
     let newDataArr = [];
@@ -345,7 +368,9 @@ deleteFolderBtn.addEventListener('click', () => {
       }
     });
 
-    localStorage.setItem('data', JSON.stringify(dataArr));
+    // localStorage.setItem('data', JSON.stringify(dataArr));
+    // database.data = dataArr
+    setData(dataArr)
   }
   displayFolders();
   searchFn(searchBar.value);
@@ -376,7 +401,9 @@ cancelBox.addEventListener('click', () => {
 //search appropriate folder and display relevant results
 function searchFn(query) {
   all_folders = document.querySelectorAll('.folderBox');
-  let dataArr = JSON.parse(localStorage.getItem('data'));
+  // let dataArr = JSON.parse(localStorage.getItem('data'));
+  // let dataArr = database.data
+  let dataArr = getData()
 
   if (current_breadcrumb_id == 'root') {
     dataArr.forEach((element) => {
@@ -469,7 +496,9 @@ function dfsStoreExt(e, current_breadcrumb_id, dataArr) {
     e.children = [obj];
     console.log(e.children);
 
-    localStorage.setItem('data', JSON.stringify(dataArr));
+    // localStorage.setItem('data', JSON.stringify(dataArr));
+    // database.data = dataArr
+    setData(dataArr)
   } else if (e.id == current_breadcrumb_id) {
     let inputBox = document.querySelector('#createFolderInput');
     console.log('New folder in ', e.folderName);
@@ -485,7 +514,9 @@ function dfsStoreExt(e, current_breadcrumb_id, dataArr) {
     e.children.push(obj);
     console.log(e.children);
 
-    localStorage.setItem('data', JSON.stringify(dataArr));
+    // localStorage.setItem('data', JSON.stringify(dataArr));
+    // database.data = dataArr
+    setData(dataArr)
   } else {
     dfsStoreInt(e.children, current_breadcrumb_id, dataArr);
   }
@@ -514,7 +545,5 @@ createBtn.addEventListener('click', function () {
 });
 
 document.querySelector('.content-container').addEventListener('click', () => {
-  console.log('A');
   menuFileOption.style.display = 'none';
 });
-

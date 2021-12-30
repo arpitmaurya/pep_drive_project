@@ -1,0 +1,20 @@
+{
+  "name": "pep_drive_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "database.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arpit-maurya/pep_drive_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arpit-maurya/pep_drive_project/issues"
+  },
+  "homepage": "https://github.com/arpit-maurya/pep_drive_project#readme"
+}
