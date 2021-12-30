@@ -722,6 +722,7 @@ body {
   width: 100%;
   border: 2px solid #dee0e3;
   display: flex;
+  cursor: pointer;
   border-radius: 0.4rem;
 }
 .subSize {
@@ -754,7 +755,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1rem;
+  font-size: 10px;
+  font-weight: 600;
+
 }
 
 .docContentArea {
@@ -774,14 +777,14 @@ body {
   resize: none;
 }
 
-.fileBox{
+.fileBox {
   position: relative;
 }
-.doc-saveButton{
+.doc-saveButton {
   cursor: pointer;
   position: absolute;
   top: 6.2rem;
-  height:2rem;
+  height: 2rem;
   width: 4rem;
   background-color: white;
   display: none;
@@ -789,5 +792,41 @@ body {
   align-items: center;
   font-family: sans-serif;
   border-radius: 0.5rem;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
+    rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
+    rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+}
+
+.docStyleContainer {
+  height: 80%;
+  width: 6.5rem;
+  border-right: 2px solid #dee0e3;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+.inner-docStyleContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+}
+.docStyleBox {
+  height: 100%;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #dee0e3;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+.docStyleBox:hover{
+  background-color: #dadada79;
+}
+.docStyleBox span {
+  color: #6d7075;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
 }

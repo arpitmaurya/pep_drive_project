@@ -1,0 +1,34 @@
+[33m4511316[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m Enabling search on Notepad files, showing Notepad icon in folder
+[33m5beb0ee[m Saving Notepad file (with nesting)
+[33m1369d0d[m Added database (localstorage) abstraction
+[33m41155bf[m updateUi - notePad NewFile
+[33me58ceb1[m notepad ui update
+[33m19e1dea[m notepad ui
+[33med5568d[m addBtn Changed
+[33m241fc2c[m Merge branch 'main' of https://github.com/arpit-maurya/pep_drive_project
+[33mf93bd12[m file-Menu-Ui
+[33m9667d04[m Fixed minor spelling
+[33m7cb32f9[m Added comments
+[33m9b9bb0c[m template update
+[33m76a1cdb[m Fixed Search functionality w.r.t nesting
+[33md622aa3[m Fixed Edit and Delete operations in Root folder
+[33mf9e4a43[m Modified Edit and Delete operationf for nesting
+[33m39a856c[m Fixed Breadcrumb removal
+[33m05ca6d4[m Fixed dynamic nesting
+[33m121a34a[m Fixed Breadcrumb removal (Arindam)
+[33m9f080c9[m Nesting implemented till 2 layers (Arindam)
+[33ma529484[m Fixed repeated folder creation (Arindam)
+[33mb84dbc9[m "folder_update_1.2"
+[33m8d7a046[m "folder_fix_1"
+[33mb392778[m a
+[33m76fdd9c[m a
+[33me996a6c[m Merge branch 'main' of https://github.com/arpit-maurya/pep_drive_project
+[33m9c81bda[m tess merge conflict
+[33m97e4dbc[m "check"
+[33mbf887e9[m "nesting zIndex-Fix"
+[33mf679fd2[m "Nesting with breadcrumbs" Merge branch 'main' of https://github.com/arpit-maurya/pep_drive_project
+[33m2a31fce[m Merge branch 'main' of https://github.com/arpit-maurya/pep_drive_project
+[33mef99578[m update unquie id
+[33m39dfa2b[m Added test comment
+[33m09a70d1[m Search Cross Button Fix
+[33mc332b7c[m first commit
