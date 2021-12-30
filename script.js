@@ -15,6 +15,12 @@ let deleteFolderModal = document.querySelector('#deleteFolderModal');
 let searchBar = document.querySelector('#searchBar');
 
 let menuFileOption = document.querySelector('.menu-FileOption');
+let menu_multiple_notepad = document.querySelector('.menu-multiple-box');
+let docModal = document.querySelector('#docModal');
+let docSaveBtn = document.querySelector('.doc-saveButton');
+let docfileMenuBox = document.querySelector('.fileBox');
+let docClose = document.querySelector('.close');
+
 
 let cancelDeleteFolderModal = document.querySelector(
   '#cancelDeleteFolderModal'
@@ -46,15 +52,10 @@ rootBreadcrumb.addEventListener('click', function () {
   });
 });
 
-
-
-
-
 //Listener to close the Create Folder modal
 canceladdFolderModal.addEventListener('click', function () {
   addFolderModal.style.display = 'none';
 });
-
 
 createFolderBtn.addEventListener('click', (e) => {
   createFolderFunction(); //Function to create a folder and store it in LocalStorage on clicking Okay
@@ -65,49 +66,48 @@ document.querySelector('#createFolderInput').addEventListener('keyup', (e) => {
   if (e.code === 'Enter') {
     createFolderFunction();
   }
-  
-})
+});
 
-function createFolderFunction() { //Function to create a folder
-   let inputBox = document.querySelector('#createFolderInput');
+function createFolderFunction() {
+  //Function to create a folder
+  let inputBox = document.querySelector('#createFolderInput');
 
-   let folderName = inputBox.value; //get the user-entered folder name 
+  let folderName = inputBox.value; //get the user-entered folder name
 
-   let arrData = [];
-   
-   //condition to handle the case where there is no data at all, or the array is empty
-   if (
-     !JSON.parse(localStorage.getItem('data')) ||
-     JSON.parse(localStorage.getItem('data')).length == 0
-   ) {
-     let obj = {
-       id: uid(),
-       folderName: folderName,
-       children: [],
-     };
+  let arrData = [];
 
-     localStorage.setItem('data', JSON.stringify([obj]));
-   } else { //condition to handle the case where some data exists, and for nesting of folders
-     let folderListObj = localStorage.getItem('data');
-     
+  //condition to handle the case where there is no data at all, or the array is empty
+  if (
+    !JSON.parse(localStorage.getItem('data')) ||
+    JSON.parse(localStorage.getItem('data')).length == 0
+  ) {
+    let obj = {
+      id: uid(),
+      folderName: folderName,
+      children: [],
+    };
 
-     let breadcrumb = document.querySelectorAll('.rootBox');
-     //check for which subfolder to create the new folder in using breadcrumb's ID, which is the same as folder ID. This will be unique for every folder
-     breadcrumb.forEach((e) => {
-       
-       if (e.id.trim() == current_breadcrumb_id.trim()) {
-         //  For inner folders
-         
-         storeFolder(current_breadcrumb_id, folderListObj);
-       }
-     });
-   }
+    localStorage.setItem('data', JSON.stringify([obj]));
+  } else {
+    //condition to handle the case where some data exists, and for nesting of folders
+    let folderListObj = localStorage.getItem('data');
 
-   //Empty out the input area and close modal after folder is created
-   inputBox.value = '';
-   addFolderModal.style.display = 'None';
-   displayFolders();
-   searchFn(searchBar.value);
+    let breadcrumb = document.querySelectorAll('.rootBox');
+    //check for which subfolder to create the new folder in using breadcrumb's ID, which is the same as folder ID. This will be unique for every folder
+    breadcrumb.forEach((e) => {
+      if (e.id.trim() == current_breadcrumb_id.trim()) {
+        //  For inner folders
+
+        storeFolder(current_breadcrumb_id, folderListObj);
+      }
+    });
+  }
+
+  //Empty out the input area and close modal after folder is created
+  inputBox.value = '';
+  addFolderModal.style.display = 'None';
+  displayFolders();
+  searchFn(searchBar.value);
 }
 
 //Function to search for correct folder using DFS and storing it in LocalStorage
@@ -151,31 +151,32 @@ editFolderBtn.addEventListener('click', () => {
 
 //Handle folder renaming upon clicking OK
 editFolderBtn.addEventListener('click', () => {
-  editFolderName()
+  editFolderName();
 });
 
 //Handle folder renaming upon pressing Enter
 editFolderInput.addEventListener('keyup', (e) => {
   if (e.code === 'Enter') {
-      editFolderModal.style.display = 'none';
-     editFolderName();
-   }
-})
+    editFolderModal.style.display = 'none';
+    editFolderName();
+  }
+});
 
 //Handle renaming Folder Name
 function editFolderName() {
   let dataArr = JSON.parse(localStorage.getItem('data'));
-  if (current_breadcrumb_id == 'root') { //Renaming in root. Simple Linear Search
+  if (current_breadcrumb_id == 'root') {
+    //Renaming in root. Simple Linear Search
     dataArr.forEach((element) => {
       if (element.id == current_Id) {
         element.folderName = editFolderInput.value;
       }
     });
-  } else { //Renaming inside sub-folders. Apply DFS to search for the proper object to update it's folderName property
+  } else {
+    //Renaming inside sub-folders. Apply DFS to search for the proper object to update it's folderName property
     let childArr = dfsExt(current_breadcrumb_id, dataArr);
     //Linear search inside correct cub-folder's children array to search for the folder to be renamed
     childArr.forEach((element) => {
-      
       if (element.id == current_Id) {
         element.folderName = editFolderInput.value;
       }
@@ -187,23 +188,21 @@ function editFolderName() {
   searchFn(searchBar.value);
 }
 
-
-
-displayFolders();//Calling it by default at the beginning of the process to display all folders in the root directory
+displayFolders(); //Calling it by default at the beginning of the process to display all folders in the root directory
 function displayFolders() {
   breadcrumb_flag = false;
   let dataArr = JSON.parse(localStorage.getItem('data'));
   childArr = [];
   childArr = dfsExt(current_breadcrumb_id, dataArr); //Search for the folders in the current directory to find the children objects, which will be displayed on the screen
 
-  
   document.querySelector('.inner-folder-container').innerHTML = '';
   let newArr;
-  
+
   if (current_breadcrumb_id == 'root') {
     //set appropriate data to display folders in the root directory
     newArr = dataArr;
-  } else if (childArr) { //set approp data to to display the required sub-folder
+  } else if (childArr) {
+    //set approp data to to display the required sub-folder
     newArr = childArr;
   } else {
     newArr = [];
@@ -219,7 +218,7 @@ function displayFolders() {
       var clone = document.importNode(folderTemplate, true);
       clone.querySelectorAll('.editBox span').forEach((element) => {
         element.setAttribute('id', e.id);
-      })
+      });
       let folderBox = clone.querySelector('.folderBox');
       folderBox.setAttribute('id', e.id);
       clone.querySelector('.folderName').innerText = e.folderName;
@@ -236,7 +235,6 @@ function displayFolders() {
         breadcrumbs_ParentContainer = document.querySelector('.path-container');
         // breadcrumbs = document.querySelector('.path-container');
 
-        
         let temp_breadCrumb_template =
           document.querySelector('#temp-breadCrumb').content;
         var temp_breadCrumb_clone = document.importNode(
@@ -244,16 +242,16 @@ function displayFolders() {
           true
         );
 
-         let rootBox_contianer =
-           temp_breadCrumb_clone.querySelector('.rootBox-contianer');
+        let rootBox_contianer =
+          temp_breadCrumb_clone.querySelector('.rootBox-contianer');
         rootBox_contianer.setAttribute('id', folderBox.id);
-        
+
         let rootBox = temp_breadCrumb_clone.querySelector('.rootBox');
-         rootBox.setAttribute('id', folderBox.id);
+        rootBox.setAttribute('id', folderBox.id);
         rootBox.innerHTML = folderBox.children[2].innerText;
 
         breadcrumbs_ParentContainer.appendChild(temp_breadCrumb_clone);
-        
+
         //handle removal of breadcrumbs for non-root folders
         rootBox_contianer.addEventListener('click', () => {
           current_breadcrumb_id = rootBox_contianer.id;
@@ -263,7 +261,11 @@ function displayFolders() {
           breadcrumbs_list = document.querySelectorAll('.rootBox');
 
           breadcrumbs_list.forEach((e) => {
-            if (e.id != rootBox_contianer.id && e.id != 'root' && breadcrumb_flag == true) {
+            if (
+              e.id != rootBox_contianer.id &&
+              e.id != 'root' &&
+              breadcrumb_flag == true
+            ) {
               e.parentElement.remove();
             } else if (e.id == rootBox_contianer.id) {
               breadcrumb_flag = true;
@@ -281,20 +283,22 @@ function displayFolders() {
     e.addEventListener('click', (e) => {
       e.stopPropagation();
       editFolderModal.style.display = 'block';
-      document.querySelector('#renameFolderInput').focus()
+      document.querySelector('#renameFolderInput').focus();
       current_Id = e.currentTarget.getAttribute('id');
 
       let dataArr = JSON.parse(localStorage.getItem('data'));
 
-      if (current_breadcrumb_id == 'root') {//Linear search in case of root folder
+      if (current_breadcrumb_id == 'root') {
+        //Linear search in case of root folder
         dataArr.forEach((element) => {
           if (element.id == current_Id) {
             editFolderInput.value = element.folderName;
           }
         });
-      } else { //DFS followed by Linear search for sub-folder
+      } else {
+        //DFS followed by Linear search for sub-folder
         let childArr = dfsExt(current_breadcrumb_id, dataArr);
-        
+
         childArr.forEach((element) => {
           // console.log(element.id, current_Id);
           if (element.id == current_Id) {
@@ -317,7 +321,7 @@ function displayFolders() {
   });
 }
 
-//Delete folder. Linear search for Root folder deletion. 
+//Delete folder. Linear search for Root folder deletion.
 //DFS search for sub-folder deletion
 deleteFolderBtn.addEventListener('click', () => {
   let dataArr = JSON.parse(localStorage.getItem('data'));
@@ -369,8 +373,6 @@ cancelBox.addEventListener('click', () => {
   searchFn('');
 });
 
-
-
 //search appropriate folder and display relevant results
 function searchFn(query) {
   all_folders = document.querySelectorAll('.folderBox');
@@ -407,23 +409,24 @@ function dfsExt(current_breadcrumb_id, dataArr) {
   }
 
   dataArr.forEach((e) => {
-    
-    if (e.id == current_breadcrumb_id) { //If relevant folder has been found
-      
-      if (!resultChildArray) { //condition put to not let undefined result override the actual result
+    if (e.id == current_breadcrumb_id) {
+      //If relevant folder has been found
+
+      if (!resultChildArray) {
+        //condition put to not let undefined result override the actual result
         resultChildArray = e.children;
-      } else if (e.children) { //update the children array and return it
+      } else if (e.children) {
+        //update the children array and return it
         resultChildArray = e.children;
       }
-      
-    } else { //Search in the child folder
+    } else {
+      //Search in the child folder
       dfsInt(current_breadcrumb_id, e.children);
     }
   });
-  
+
   return resultChildArray;
 }
-
 
 function dfsInt(current_breadcrumb_id, childrenArr) {
   var ansReturn;
@@ -502,11 +505,47 @@ createBtn.addEventListener('click', function () {
   document
     .querySelector('.menu-createFolderBtn')
     .addEventListener('click', () => {
-        menuFileOption.style.display = 'none';
+      menuFileOption.style.display = 'none';
       addFolderModal.style.display = 'block';
       document.querySelector('#createFolderInput').focus();
     });
 
+  menu_multiple_notepad.addEventListener('click', () => {
+    menuFileOption.style.display = 'none';
+    docModal.style.display = 'block';
+    docfileMenuBox.addEventListener('mouseenter', () => {
+      docSaveBtn.style.display = 'flex';
+      docfileMenuBox.style.backgroundColor = '#dee0e3';
+      docSaveBtn.addEventListener('click', () => {
+        docSaveBtn.style.display = 'none';
+        docfileMenuBox.style.backgroundColor = '';
+      });
+      docSaveBtn.addEventListener('mouseleave', () => {
+        docSaveBtn.style.display = 'none';
+        docfileMenuBox.style.backgroundColor = '';
+      });
+    });
+
+    
+      docClose.addEventListener('click', () => {
+        docModal.style.display = 'none';
+      });
+    let docFullScreen = document.querySelector('.fullscreen');
+    let isDocOpen = false;
+      docFullScreen.addEventListener('click', () => {
+        if (isDocOpen) {
+          docModal.style.height = '';
+          docModal.style.width = '';
+          docModal.style.top = '';
+          isDocOpen = false
+        } else {
+           docModal.style.height = '100vh';
+           docModal.style.width = '100vw';
+          docModal.style.top = '0px';
+          isDocOpen = true
+       }
+      });
+  });
 });
 
 document.querySelector('.content-container').addEventListener('click', () => {
