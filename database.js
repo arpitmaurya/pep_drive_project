@@ -6,6 +6,10 @@ function setData(value) {
 }
 
 function getData() {
+    if(!JSON.parse(localStorage.getItem('data'))){
+        setData([])
+        return getData()
+    }
     return JSON.parse(localStorage.getItem('data'))
 }
 
@@ -54,9 +58,9 @@ function storeNotepadFile() {
                 ext: ".txt"
             };
 
-            currentFoldersChildren.push(obj);
+            dataArr.push(obj);
 
-            setData(currentFoldersChildren)
+            setData(dataArr)
             displayFolders()
         }
 
@@ -83,9 +87,9 @@ function storeNotepadFile() {
                 ext: ".txt"
             };
 
-            currentFoldersChildren.push(obj);
+            dataArr.push(obj);
 
-            setData(currentFoldersChildren)
+            setData(dataArr)
             displayFolders()
 
         }
