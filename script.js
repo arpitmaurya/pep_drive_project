@@ -370,7 +370,7 @@ deleteFolderBtn.addEventListener('click', () => {
     });
     // localStorage.setItem('data', JSON.stringify(newDataArr));
     // database.data = newDataArr
-    setData(dataArr)
+    setData(newDataArr)
   } else {
     let childArr = dfsExt(current_breadcrumb_id, dataArr);
     let newDataArr = [];
