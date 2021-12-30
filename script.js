@@ -496,13 +496,6 @@ function dfsStoreInt(childFolder, current_breadcrumb_id, dataArr) {
   }
 }
 
-
-
-// createBtn.addEventListener('click', function () {
-//   addFolderModal.style.display = 'block';
-//   document.querySelector('#createFolderInput').focus();
-// });
-
 //Listener to open the modal to create a folder and highlight text
 createBtn.addEventListener('click', function () {
   menuFileOption.style.display = 'flex';
