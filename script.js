@@ -240,15 +240,16 @@ function displayFolders() {
       folderBox.setAttribute('id', e.id);
 
       let iconSelector = clone.querySelector('.folderIcon .material-icons')
-      
-      if(e.folderName){
+
+      if (e.folderName) {
         clone.querySelector('.folderName').innerText = e.folderName;
-        iconSelector.innerHTML="folder"
+        iconSelector.innerHTML = "folder"
       }
-      else if(e.fileName && e.ext==".txt"){
-        clone.querySelector('.folderName').innerText = e.fileName;
+      else if (e.fileName && e.ext == ".txt") {
+        clone.querySelector('.folderName').innerText = e.fileName + e.ext;
         iconSelector.style.fontSize = "65px"
-        iconSelector.innerHTML="description"
+        iconSelector.innerHTML = "description"
+        iconSelector.style.color = "#4285f4"
       }
 
 
@@ -260,8 +261,17 @@ function displayFolders() {
       //handle Travelling to the folder's contents, and appending breadcrumbs on clicking them using Templates
       folderBox.addEventListener('click', () => {
         current_breadcrumb_id = folderBox.id;
-
-        document.querySelector('.inner-folder-container').innerHTML = ``;
+        let name = folderBox.querySelector('.folderName').innerText
+        console.log(name);
+        if (!name.includes(".")) { //for folders
+          document.querySelector('.inner-folder-container').innerHTML = ``;
+        }
+        else {
+          document.querySelector('.inner-folder-container').innerHTML = ``;
+          
+          openFile(folderBox.id, name)
+          
+        }
 
         breadcrumbs_ParentContainer = document.querySelector('.path-container');
         // breadcrumbs = document.querySelector('.path-container');
@@ -286,8 +296,14 @@ function displayFolders() {
         //handle removal of breadcrumbs for non-root folders
         rootBox_contianer.addEventListener('click', () => {
           current_breadcrumb_id = rootBox_contianer.id;
-          document.querySelector('.inner-folder-container').innerHTML = ``;
-          displayFolders();
+          if (name.includes(".") == false) { //for folders
+            document.querySelector('.inner-folder-container').innerHTML = ``;
+            displayFolders()
+          }
+          else { //for file
+            // displayFolders()
+          }
+
           searchFn(searchBar.value);
           breadcrumbs_list = document.querySelectorAll('.rootBox');
 
@@ -303,8 +319,14 @@ function displayFolders() {
             }
           });
         });
-        displayFolders();
-        searchFn(searchBar.value);
+
+        if (!name.includes(".")) { //for folders
+          displayFolders();
+          searchFn(searchBar.value);
+        }
+        else {
+
+        }
       });
     });
   }
@@ -424,11 +446,11 @@ function searchFn(query) {
       current_folder = document.getElementById(`${element.id}`);
       if (element.folderName && element.folderName.includes(query) || query === '') {
         current_folder.style.display = 'block';
-      } 
-       else if(element.fileName && element.fileName.includes(query) || query === ''){
+      }
+      else if (element.fileName && element.fileName.includes(query) || query === '') {
         current_folder.style.display = 'block';
-       }
-       else{
+      }
+      else {
         current_folder.style.display = 'none';
       }
     });
@@ -439,11 +461,11 @@ function searchFn(query) {
 
       if (element.folderName && element.folderName.includes(query) || query === '') {
         current_folder.style.display = 'block';
-      } 
-       else if(element.fileName && element.fileName.includes(query) || query === ''){
+      }
+      else if (element.fileName && element.fileName.includes(query) || query === '') {
         current_folder.style.display = 'block';
-       }
-       else{
+      }
+      else {
         current_folder.style.display = 'none';
       }
     });
@@ -510,9 +532,3 @@ createBtn.addEventListener('click', function () {
 document.querySelector('.content-container').addEventListener('click', () => {
   menuFileOption.style.display = 'none';
 });
-
-
-
-function storeNewDataInFolder() {
-
-}
