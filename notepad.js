@@ -182,7 +182,7 @@ function dragAndDrop(element, event) {
   // moves the ball at (pageX, pageY) coordinates
   // taking initial shifts into account
   function moveAt(pageX, pageY) {
-    element.style.left = pageX - (shiftX/10) + 'px';
+    element.style.left = pageX - (shiftX*0) + 'px';
     element.style.top = pageY - shiftY + 'px';
   }
 
