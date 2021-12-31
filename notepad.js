@@ -1,6 +1,8 @@
 let fileNameInput = document.querySelector('.header_folderName');
-let fontFamilyOption = document.querySelector('#fontOption')
-let notepadSaveBtn = document.querySelector(".doc-saveButton")
+let fontFamilyOption = document.querySelector('#fontOption');
+let notepadSaveBtn = document.querySelector(".doc-saveButton");
+let notepadUpdateBtn = document.querySelector(".doc-updateButton");
+
 
 let docBold = document.querySelector('.docBold');
 let docItalic = document.querySelector('.docItalic')
@@ -13,7 +15,7 @@ let docFontOption = document.querySelector('#fontOption');
 let isBoldDoc = true;
 let isItalicDoc = true;
 let docModal_header_bar_left = document.querySelector('.docModal-headerBar-left');
-    
+
 
 
 
@@ -35,38 +37,35 @@ let docModal_header_bar_left = document.querySelector('.docModal-headerBar-left'
 
 //Listener to open the modal for new document 
 menu_multiple_notepad.addEventListener('click', () => {
-    fileNameInput.value=''
+    fileNameInput.value = ''
     content.value = ''
-    content.style.fontSize="10px"
+    content.style.fontSize = "18px"
     content.style.fontFamily = 'sans-serif'
     content.style.fontWeight = ''
     content.style.fontStyle = ''
-    content.style.fontSize = ''
 
     menuFileOption.style.display = 'none';
     docModal.style.display = 'block';
     docfileMenuBox.addEventListener('mouseenter', () => {
         docSaveBtn.style.display = 'flex';
+        notepadUpdateBtn.style.display = 'none';
+
+
         docfileMenuBox.style.backgroundColor = '#dee0e3';
-        docSaveBtn.addEventListener('click', () => {
-            docSaveBtn.style.display = 'none';
-            docfileMenuBox.style.backgroundColor = '';
-            docClose.click()
-        });
-        docSaveBtn.addEventListener('mouseleave', () => {
-            docSaveBtn.style.display = 'none';
-            docfileMenuBox.style.backgroundColor = '';
-        });
+
     });
 
     docClose.addEventListener('click', () => {
         docModal.style.display = 'none';
+
+
+
         //set default values
-        content.value = ''
-        content.style.fontWeight = ''
-        content.style.fontFamily = 'sans-serif'
-        content.style.fontStyle = ''
-        content.style.fontSize = '18px'
+        // content.value = ''
+        // content.style.fontWeight = ''
+        // content.style.fontFamily = 'sans-serif'
+        // content.style.fontStyle = ''
+        // content.style.fontSize = '18px'
     });
     let docFullScreen = document.querySelector('.fullscreen');
     let isDocOpen = false;
@@ -92,8 +91,10 @@ menu_multiple_notepad.addEventListener('click', () => {
 
 
 
-notepadSaveBtn.addEventListener('click', () => {
-    storeNotepadFile()
+notepadSaveBtn.addEventListener('click', function () {
+    docSaveBtn.style.display = 'none';
+    docfileMenuBox.style.backgroundColor = '';
+    storeNotepadFile(undefined, undefined)
 })
 
 
@@ -133,39 +134,71 @@ docFontOption.addEventListener('change', (e) => {
 })
 
 
+docSaveBtn.addEventListener('click', () => {
+    // docSaveBtn.style.display = 'none';
+    // docfileMenuBox.style.backgroundColor = '';
+    docClose.click()
+});
+docSaveBtn.addEventListener('mouseleave', () => {
+    notepadUpdateBtn.style.display = 'none';
+    docSaveBtn.style.display = 'none';
+    docfileMenuBox.style.backgroundColor = '';
+});
+
+
+notepadUpdateBtn.addEventListener('click', () => {
+    notepadUpdateBtn.style.display = 'none';
+    notepadSaveBtn.style.display = 'none';
+    docfileMenuBox.style.backgroundColor = '';
+
+});
+
+docClose.addEventListener('click', () => {
+    docModal.style.display = 'none';
+    displayFolders()
+});
+
+
+        
+
 function handleOpeningNotepad(fileData) {
     docModal.style.display = 'block';
     fileNameInput.value = fileData.fileName + fileData.ext
     content.value = fileData.content
-    
-    if(fileData.bold=="bold"){docBold.click()}
-    if(fileData.italic=="italic"){docItalic.click()}
+
+    if (fileData.bold == "bold") { docBold.click() }
+    if (fileData.italic == "italic") { docItalic.click() }
     docFontOption.value = fileData.fontFamily
     docFontSize.innerHTML = fileData.fontSize
-    
+
     content.style.fontFamily = fileData.fontFamily
     content.style.fontWeight = fileData.bold
     content.style.fontStyle = fileData.italic
     content.style.fontSize = fileData.fontSize
 
     docfileMenuBox.addEventListener('mouseenter', () => {
-        docSaveBtn.style.display = 'flex';
+        notepadUpdateBtn.style.display = 'flex';
+        notepadSaveBtn.style.display = 'none';
+
         docfileMenuBox.style.backgroundColor = '#dee0e3';
-        docSaveBtn.addEventListener('click', () => {
-            docSaveBtn.style.display = 'none';
-            docfileMenuBox.style.backgroundColor = '';
-            // console.log(fileData.id);
-            storeNotepadFile(fileData.id, fileData.fileName.split(".")[0])
-        });
-        docSaveBtn.addEventListener('mouseleave', () => {
-            docSaveBtn.style.display = 'none';
-            docfileMenuBox.style.backgroundColor = '';
-        });
+
     });
 
-    docClose.addEventListener('click', () => {
-        docModal.style.display = 'none';
-        displayFolders()
+    notepadUpdateBtn.addEventListener('click', store)
+    function store(){
+        // console.log(fileData.id, fileData.fileName.split(".")[0]);
+        storeNotepadFile(fileData.id, fileData.fileName.split(".")[0])
+        removeUpdateListener()
+    }
+    function removeUpdateListener(){
+        // console.log("Removed");
+        notepadUpdateBtn.removeEventListener('click',store)
+    }
+
+    notepadUpdateBtn.addEventListener('mouseleave', () => {
+
+        notepadUpdateBtn.style.display = 'none';
+        docfileMenuBox.style.backgroundColor = '';
     });
 
 
@@ -189,35 +222,35 @@ function handleOpeningNotepad(fileData) {
 }
 
 docModal_header_bar_left.addEventListener('mousedown', (event) => {
-  dragAndDrop(docModal, event);
+    dragAndDrop(docModal, event);
 });
 
 function dragAndDrop(element, event) {
-  let shiftX = event.clientX - (element.getBoundingClientRect().left);
-  let shiftY = event.clientY - element.getBoundingClientRect().top;
+    let shiftX = event.clientX - (element.getBoundingClientRect().left);
+    let shiftY = event.clientY - element.getBoundingClientRect().top;
 
-  element.style.position = 'absolute';
-  element.style.zIndex = 1000;
+    element.style.position = 'absolute';
+    element.style.zIndex = 1000;
 
-  moveAt(event.pageX, event.pageY);
-
-  // moves the ball at (pageX, pageY) coordinates
-  // taking initial shifts into account
-  function moveAt(pageX, pageY) {
-    element.style.left = pageX - (shiftX*0) + 'px';
-    element.style.top = pageY - shiftY + 'px';
-  }
-
-  function onMouseMove(event) {
     moveAt(event.pageX, event.pageY);
-  }
 
-  // move the ball on mousemove
-  document.addEventListener('mousemove', onMouseMove);
+    // moves the ball at (pageX, pageY) coordinates
+    // taking initial shifts into account
+    function moveAt(pageX, pageY) {
+        element.style.left = pageX - (shiftX * 0) + 'px';
+        element.style.top = pageY - shiftY + 'px';
+    }
 
-  // drop the ball, remove unneeded handlers
-  element.onmouseup = function () {
-    document.removeEventListener('mousemove', onMouseMove);
-    element.onmouseup = null;
-  };
+    function onMouseMove(event) {
+        moveAt(event.pageX, event.pageY);
+    }
+
+    // move the ball on mousemove
+    document.addEventListener('mousemove', onMouseMove);
+
+    // drop the ball, remove unneeded handlers
+    element.onmouseup = function () {
+        document.removeEventListener('mousemove', onMouseMove);
+        element.onmouseup = null;
+    };
 }

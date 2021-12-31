@@ -29,9 +29,12 @@ function getCurrentFoldersChildren() {
 
 
 function storeNotepadFile(id, name) {
+    console.log(id,name);
     let dataArr = getData()
+    resultFileData=undefined;
     let fileData = getFileDataExt(id, name, dataArr)
-    // console.log(fileData);
+    // console.log(resultFileData)
+
     // console.log(fileData);
     if (id === undefined && fileData === undefined) { //Creating file for the first time. 2nd condition is necessary.
         console.log("Went in if");
@@ -72,7 +75,7 @@ function storeNotepadFile(id, name) {
             }
 
         }
-
+        
         dataArr.forEach((e) => { //Case: Root directory is not empty
             if (current_breadcrumb_id.trim() == 'root' && counter == 0) {
                 counter++;
@@ -107,34 +110,45 @@ function storeNotepadFile(id, name) {
 
             }
             //Handle creation of notepad inside a sub-folder
-            dfsNotepadExt(e, current_breadcrumb_id, dataArr);
+            else {
+                dfsNotepadExt(e, current_breadcrumb_id, dataArr);
+            }
         });
 
     }
     else { //Case: File was created previously, update the data
         let dataArr = getData()
+        counter = 0; //Placed a counter to handle repeated file creation
 
         if (current_breadcrumb_id == 'root') { //Case: Notepad file is in root directory 
 
             //work inside root directory
             dataArr.forEach((e) => {
-                if (e.id == id) {
-                    // console.log(e.id, e.fileName);
+                if (e.id == id && counter == 0) {
+                    counter++;
+                    console.log(e.id, e.fileName, id);
                     e.fileName = document.querySelector('.header_folderName').value.split(".")[0]
+                    // console.log(e.fileName);
                     e.fontSize = document.querySelector('.textSizeValue').innerHTML
+                    // console.log(e.fontSize);
                     e.fontFamily = document.querySelector('#fontOption').value;
+                    // console.log(e.fontFamily);
                     e.content = document.querySelector('#notepadTextArea').value
+                    // console.log(document.querySelector('#notepadTextArea').value);
                     e.bold = document.querySelector('#notepadTextArea').style.fontWeight;
+                    // console.log(e.bold);
                     e.italic = document.querySelector('#notepadTextArea').style.fontStyle;
+                    // console.log(e.italic);
 
 
+                    console.log(dataArr);
                     setData(dataArr)
                 }
             })
         }
         else { //Case: Notepad is in a sub-folder
             let newdataArr = setFileDataExt(fileData, id, name, dataArr)
-            
+
             setData(newdataArr)
         }
 
@@ -273,14 +287,16 @@ function dfsNotepadInt(childFolder, current_breadcrumb_id, dataArr) {
 function openFile(id, name) {
     let dataArr = getData()
     // console.log(dataArr);
+    resultFileData=undefined
     let fileData = getFileDataExt(id, name, dataArr)
+    console.log(resultFileData)
+
     // console.log(fileData);
     if (fileData.ext == ".txt") { //handle display of .txt files
         // console.log("Going to open notepad");
         //open Notepad modal with filedata
         handleOpeningNotepad(fileData)
 
-        //remove listener on save button
 
         //keyup event to constantly write data
     }
