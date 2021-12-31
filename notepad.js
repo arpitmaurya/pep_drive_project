@@ -12,8 +12,30 @@ let docFontSize = document.querySelector('.textSizeValue');
 let docFontOption = document.querySelector('#fontOption');
 let isBoldDoc = true;
 let isItalicDoc = true;
+let docModal_header_bar = document.querySelector('.docModal-header-bar')
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Listener to open the modal for new document 
 menu_multiple_notepad.addEventListener('click', () => {
+    
     menuFileOption.style.display = 'none';
     docModal.style.display = 'block';
     docfileMenuBox.addEventListener('mouseenter', () => {
@@ -142,4 +164,38 @@ function handleOpeningNotepad(fileData){
         }
     });
 
+}
+
+docModal_header_bar.addEventListener('mousedown', (event) => {
+    dragAndDrop(docModal, event);
+});
+
+function dragAndDrop(element, event) {
+  let shiftX = event.clientX - (element.getBoundingClientRect().left);
+  let shiftY = event.clientY - element.getBoundingClientRect().top;
+
+  element.style.position = 'absolute';
+  element.style.zIndex = 1000;
+
+  moveAt(event.pageX, event.pageY);
+
+  // moves the ball at (pageX, pageY) coordinates
+  // taking initial shifts into account
+  function moveAt(pageX, pageY) {
+    element.style.left = pageX - (shiftX/10) + 'px';
+    element.style.top = pageY - shiftY + 'px';
+  }
+
+  function onMouseMove(event) {
+    moveAt(event.pageX, event.pageY);
+  }
+
+  // move the ball on mousemove
+  document.addEventListener('mousemove', onMouseMove);
+
+  // drop the ball, remove unneeded handlers
+  element.onmouseup = function () {
+    document.removeEventListener('mousemove', onMouseMove);
+    element.onmouseup = null;
+  };
 }
