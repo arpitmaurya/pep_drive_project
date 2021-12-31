@@ -180,7 +180,12 @@ function editFolderName() {
     //Renaming in root. Simple Linear Search
     dataArr.forEach((element) => {
       if (element.id == current_Id) {
-        element.folderName = editFolderInput.value;
+        if (element.folderName) {
+          element.folderName = editFolderInput.value;
+        }
+        else{
+          element.fileName = editFolderInput.value;
+        }
       }
     });
   } else {
@@ -189,7 +194,12 @@ function editFolderName() {
     //Linear search inside correct cub-folder's children array to search for the folder to be renamed
     childArr.forEach((element) => {
       if (element.id == current_Id) {
-        element.folderName = editFolderInput.value;
+        if (element.folderName) {
+          element.folderName = editFolderInput.value;
+        }
+        else{
+          element.fileName = editFolderInput.value;
+        }
       }
     });
   }
@@ -353,7 +363,12 @@ function displayFolders() {
         //Linear search in case of root folder
         dataArr.forEach((element) => {
           if (element.id == current_Id) {
-            editFolderInput.value = element.folderName;
+            if (element.folderName) {
+              editFolderInput.value = element.folderName;
+            }
+            else {
+              editFolderInput.value = element.fileName;
+            }
           }
         });
       } else {
@@ -363,7 +378,12 @@ function displayFolders() {
         childArr.forEach((element) => {
           // console.log(element.id, current_Id);
           if (element.id == current_Id) {
-            editFolderInput.value = element.folderName;
+            if (element.folderName) {
+              editFolderInput.value = element.folderName;
+            }
+            else {
+              editFolderInput.value = element.fileName;
+            }
           }
         });
       }
