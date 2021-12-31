@@ -12,7 +12,7 @@ let docFontSize = document.querySelector('.textSizeValue');
 let docFontOption = document.querySelector('#fontOption');
 let isBoldDoc = true;
 let isItalicDoc = true;
-let docModal_header_bar = document.querySelector('.docModal-header-bar')
+let docModal_header_bar_left = document.querySelector('.docModal-headerBar-left');
     
 
 
@@ -166,8 +166,8 @@ function handleOpeningNotepad(fileData){
 
 }
 
-docModal_header_bar.addEventListener('mousedown', (event) => {
-    dragAndDrop(docModal, event);
+docModal_header_bar_left.addEventListener('mousedown', (event) => {
+  dragAndDrop(docModal, event);
 });
 
 function dragAndDrop(element, event) {

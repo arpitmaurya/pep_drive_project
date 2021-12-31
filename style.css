@@ -564,7 +564,7 @@ body {
 
 .docModal-headerBar-left {
   height: 100%;
-  width: 85%;
+  width: 92%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -592,7 +592,8 @@ body {
 
 .docModal-headerBar-right {
   height: 100%;
-  width: 15%;
+  width: 8%;
+
   display: flex;
   justify-content: flex-end;
   padding-right: 0.5rem;
