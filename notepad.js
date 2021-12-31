@@ -18,23 +18,6 @@ let docModal_header_bar_left = document.querySelector('.docModal-headerBar-left'
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Listener to open the modal for new document 
 menu_multiple_notepad.addEventListener('click', () => {
     fileNameInput.value = ''
@@ -176,13 +159,19 @@ function handleOpeningNotepad(fileData) {
     content.style.fontStyle = fileData.italic
     content.style.fontSize = fileData.fontSize
 
-    docfileMenuBox.addEventListener('mouseenter', () => {
+    docfileMenuBox.addEventListener('mouseenter', showUpdateButton);
+
+    function showUpdateButton(){
         notepadUpdateBtn.style.display = 'flex';
         notepadSaveBtn.style.display = 'none';
-
         docfileMenuBox.style.backgroundColor = '#dee0e3';
+        removeFileMenuListener()
+    }
 
-    });
+    function removeFileMenuListener(){
+        docfileMenuBox.removeEventListener('mouseenter',showUpdateButton)
+        docfileMenuBox.removeEventListener('mouseleave', hideUpdateButton)
+    }
 
     notepadUpdateBtn.addEventListener('click', store)
     function store(){
@@ -195,12 +184,13 @@ function handleOpeningNotepad(fileData) {
         notepadUpdateBtn.removeEventListener('click',store)
     }
 
-    notepadUpdateBtn.addEventListener('mouseleave', () => {
+    notepadUpdateBtn.addEventListener('mouseleave', hideUpdateButton);
 
+    function hideUpdateButton(){
         notepadUpdateBtn.style.display = 'none';
         docfileMenuBox.style.backgroundColor = '';
-    });
-
+        removeFileMenuListener()
+    }
 
     //handle fullscreen toggle
     let docFullScreen = document.querySelector('.fullscreen');
