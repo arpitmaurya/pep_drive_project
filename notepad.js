@@ -14,6 +14,14 @@ let isBoldDoc = true;
 let isItalicDoc = true;
 //Listener to open the modal for new document 
 menu_multiple_notepad.addEventListener('click', () => {
+    fileNameInput.value=''
+    content.value = ''
+    content.style.fontSize="10px"
+    content.style.fontFamily = 'sans-serif'
+    content.style.fontWeight = ''
+    content.style.fontStyle = ''
+    content.style.fontSize = ''
+
     menuFileOption.style.display = 'none';
     docModal.style.display = 'block';
     docfileMenuBox.addEventListener('mouseenter', () => {
@@ -22,6 +30,7 @@ menu_multiple_notepad.addEventListener('click', () => {
         docSaveBtn.addEventListener('click', () => {
             docSaveBtn.style.display = 'none';
             docfileMenuBox.style.backgroundColor = '';
+            docClose.click()
         });
         docSaveBtn.addEventListener('mouseleave', () => {
             docSaveBtn.style.display = 'none';
@@ -31,6 +40,12 @@ menu_multiple_notepad.addEventListener('click', () => {
 
     docClose.addEventListener('click', () => {
         docModal.style.display = 'none';
+        //set default values
+        content.value = ''
+        content.style.fontWeight = ''
+        content.style.fontFamily = 'sans-serif'
+        content.style.fontStyle = ''
+        content.style.fontSize = '18px'
     });
     let docFullScreen = document.querySelector('.fullscreen');
     let isDocOpen = false;
@@ -62,45 +77,51 @@ notepadSaveBtn.addEventListener('click', () => {
 
 
 docBold.addEventListener('click', () => {
-  if (isBoldDoc) {
-    isBoldDoc = false
-        textArea[0].style.fontWeight = 'bold'; 
-  } else {
-    isBoldDoc = true
-        textArea[0].style.fontWeight = ''; 
-  }
+    if (isBoldDoc) {
+        isBoldDoc = false
+        textArea[0].style.fontWeight = 'bold';
+    } else {
+        isBoldDoc = true
+        textArea[0].style.fontWeight = '';
+    }
 })
 
 docItalic.addEventListener('click', () => {
-  if (isItalicDoc) {
-    isItalicDoc = false;
-    textArea[0].style.fontStyle = 'italic';
-  } else {
-    isItalicDoc = true;
-     textArea[0].style.fontStyle = '';
-  }
+    if (isItalicDoc) {
+        isItalicDoc = false;
+        textArea[0].style.fontStyle = 'italic';
+    } else {
+        isItalicDoc = true;
+        textArea[0].style.fontStyle = '';
+    }
 })
 
 
 docSubSize.addEventListener('click', () => {
-  textArea[0].style.fontSize = `${Number(docFontSize.innerHTML) - 1}px`;
-  docFontSize.innerHTML = Number(docFontSize.innerHTML) - 1;
+    textArea[0].style.fontSize = `${Number(docFontSize.innerHTML) - 1}px`;
+    docFontSize.innerHTML = Number(docFontSize.innerHTML) - 1;
 })
 
 addSize.addEventListener('click', () => {
-   textArea[0].style.fontSize = `${Number(docFontSize.innerHTML) + 1}px`;
-   docFontSize.innerHTML = Number(docFontSize.innerHTML) + 1;
+    textArea[0].style.fontSize = `${Number(docFontSize.innerHTML) + 1}px`;
+    docFontSize.innerHTML = Number(docFontSize.innerHTML) + 1;
 })
 
 docFontOption.addEventListener('change', (e) => {
-   textArea[0].style.fontFamily = e.target.value
+    textArea[0].style.fontFamily = e.target.value
 })
 
 
-function handleOpeningNotepad(fileData){
+function handleOpeningNotepad(fileData) {
     docModal.style.display = 'block';
     fileNameInput.value = fileData.fileName + fileData.ext
     content.value = fileData.content
+    
+    if(fileData.bold=="bold"){docBold.click()}
+    if(fileData.italic=="italic"){docItalic.click()}
+    docFontOption.value = fileData.fontFamily
+    docFontSize.innerHTML = fileData.fontSize
+    
     content.style.fontFamily = fileData.fontFamily
     content.style.fontWeight = fileData.bold
     content.style.fontStyle = fileData.italic
@@ -112,6 +133,8 @@ function handleOpeningNotepad(fileData){
         docSaveBtn.addEventListener('click', () => {
             docSaveBtn.style.display = 'none';
             docfileMenuBox.style.backgroundColor = '';
+            // console.log(fileData.id);
+            storeNotepadFile(fileData.id, fileData.fileName.split(".")[0])
         });
         docSaveBtn.addEventListener('mouseleave', () => {
             docSaveBtn.style.display = 'none';

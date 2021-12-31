@@ -264,7 +264,7 @@ function displayFolders() {
 
 
         let name = folderBox.querySelector('.folderName').innerText
-        console.log(name);
+        // console.log(name);
         if (!name.includes(".")) { //for folders
           current_breadcrumb_id = folderBox.id;
           document.querySelector('.inner-folder-container').innerHTML = ``;
