@@ -260,65 +260,71 @@ function displayFolders() {
 
       //handle Travelling to the folder's contents, and appending breadcrumbs on clicking them using Templates
       folderBox.addEventListener('click', () => {
-        current_breadcrumb_id = folderBox.id;
+
+
+
         let name = folderBox.querySelector('.folderName').innerText
         console.log(name);
         if (!name.includes(".")) { //for folders
+          current_breadcrumb_id = folderBox.id;
           document.querySelector('.inner-folder-container').innerHTML = ``;
         }
-        else {
+        else {//for files
           document.querySelector('.inner-folder-container').innerHTML = ``;
-          
+
           openFile(folderBox.id, name)
-          
+
         }
 
-        breadcrumbs_ParentContainer = document.querySelector('.path-container');
-        // breadcrumbs = document.querySelector('.path-container');
+        if (!name.includes(".")) { //only add a breadcrumb in case a folder has been clicked
+          breadcrumbs_ParentContainer = document.querySelector('.path-container');
+          // breadcrumbs = document.querySelector('.path-container');
 
-        let temp_breadCrumb_template =
-          document.querySelector('#temp-breadCrumb').content;
-        var temp_breadCrumb_clone = document.importNode(
-          temp_breadCrumb_template,
-          true
-        );
+          let temp_breadCrumb_template =
+            document.querySelector('#temp-breadCrumb').content;
+          var temp_breadCrumb_clone = document.importNode(
+            temp_breadCrumb_template,
+            true
+          );
 
-        let rootBox_contianer =
-          temp_breadCrumb_clone.querySelector('.rootBox-contianer');
-        rootBox_contianer.setAttribute('id', folderBox.id);
+          let rootBox_contianer =
+            temp_breadCrumb_clone.querySelector('.rootBox-contianer');
+          rootBox_contianer.setAttribute('id', folderBox.id);
 
-        let rootBox = temp_breadCrumb_clone.querySelector('.rootBox');
-        rootBox.setAttribute('id', folderBox.id);
-        rootBox.innerHTML = folderBox.children[2].innerText;
+          let rootBox = temp_breadCrumb_clone.querySelector('.rootBox');
+          rootBox.setAttribute('id', folderBox.id);
+          rootBox.innerHTML = folderBox.children[2].innerText;
 
-        breadcrumbs_ParentContainer.appendChild(temp_breadCrumb_clone);
+          breadcrumbs_ParentContainer.appendChild(temp_breadCrumb_clone);
 
-        //handle removal of breadcrumbs for non-root folders
-        rootBox_contianer.addEventListener('click', () => {
-          current_breadcrumb_id = rootBox_contianer.id;
-          if (name.includes(".") == false) { //for folders
-            document.querySelector('.inner-folder-container').innerHTML = ``;
-            displayFolders()
-          }
-          else { //for file
-            // displayFolders()
-          }
 
-          searchFn(searchBar.value);
-          breadcrumbs_list = document.querySelectorAll('.rootBox');
-
-          breadcrumbs_list.forEach((e) => {
-            if (
-              e.id != rootBox_contianer.id &&
-              e.id != 'root' &&
-              breadcrumb_flag == true
-            ) {
-              e.parentElement.remove();
-            } else if (e.id == rootBox_contianer.id) {
-              breadcrumb_flag = true;
+          //handle removal of breadcrumbs for non-root folders
+          rootBox_contianer.addEventListener('click', () => {
+            current_breadcrumb_id = rootBox_contianer.id;
+            if (name.includes(".") == false) { //for folders
+              document.querySelector('.inner-folder-container').innerHTML = ``;
+              displayFolders()
             }
+            else { //for file
+              // displayFolders()
+            }
+
+            searchFn(searchBar.value);
+            breadcrumbs_list = document.querySelectorAll('.rootBox');
+
+            breadcrumbs_list.forEach((e) => {
+              if (
+                e.id != rootBox_contianer.id &&
+                e.id != 'root' &&
+                breadcrumb_flag == true
+              ) {
+                e.parentElement.remove();
+              } else if (e.id == rootBox_contianer.id) {
+                breadcrumb_flag = true;
+              }
+            });
           });
-        });
+        }
 
         if (!name.includes(".")) { //for folders
           displayFolders();

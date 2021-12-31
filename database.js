@@ -31,7 +31,7 @@ function getCurrentFoldersChildren() {
 function storeNotepadFile() {
     // currentFoldersChildren = getCurrentFoldersChildren()
     // console.log(currentFoldersChildren);
-    counter = 0; //Placed a counter to handle repeated folder creation
+    counter = 0; //Placed a counter to handle repeated file creation
     let dataArr = getData()
 
 
@@ -243,13 +243,15 @@ function openFile(id, name) {
     // console.log(dataArr);
     let fileData = getFileDataExt(id, name, dataArr)
     console.log(fileData);
-    // if (fileData.fileName.endsWith(".txt")) {
-    //     //open Notepad modal with filedata
+    if (fileData.ext==".txt") { //handle display of .txt files
+        console.log("Going to open notepad");
+        //open Notepad modal with filedata
+        handleOpeningNotepad(fileData)
 
-    //     //remove listener on save button
+        //remove listener on save button
 
-    //     //keyup event to constantly write data
-    // }
+        //keyup event to constantly write data
+    }
 }
 
 //get a file's data using DFS
