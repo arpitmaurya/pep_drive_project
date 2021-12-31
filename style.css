@@ -2,16 +2,19 @@
   box-sizing: border-box;
 }
 
+
 body {
   margin: 0;
   padding: 0;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 }
 
 .main-container {
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
 }
 
 /* Header Bar Css Start */
@@ -127,6 +130,7 @@ body {
   padding-bottom: 1rem;
   padding-left: 2rem;
   padding-right: 2rem;
+
 }
 
 /* Path Contianer css Start */
@@ -472,10 +476,12 @@ body {
 
   display: flex;
   border-bottom: 2px solid #dee0e3;
+  
 }
 .docModal-header {
   height: 4rem;
   width: 100%;
+  overflow: auto;
   border-bottom: 2px solid #dee0e3;
   display: flex;
   align-items: center;
@@ -483,6 +489,7 @@ body {
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
 .header_folderName_fileMenu_container {
   height: 90%;
   width: 80%;
@@ -563,8 +570,9 @@ body {
 }
 
 .docModal-headerBar-left {
+  cursor: pointer;
   height: 100%;
-  width: 85%;
+  width: 92%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -592,7 +600,8 @@ body {
 
 .docModal-headerBar-right {
   height: 100%;
-  width: 15%;
+  width: 8%;
+
   display: flex;
   justify-content: flex-end;
   padding-right: 0.5rem;
