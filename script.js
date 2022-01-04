@@ -261,8 +261,6 @@ function displayFolders() {
         iconSelector.innerHTML = "description"
         iconSelector.style.color = "#4285f4"
       }
-
-
       // clone.querySelector('.folderName').innerText = e.folderName;
       document.querySelector('.inner-folder-container').appendChild(clone);
 

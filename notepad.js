@@ -16,25 +16,6 @@ let isBoldDoc = true;
 let isItalicDoc = true;
 let docModal_header_bar_left = document.querySelector('.docModal-headerBar-left');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Listener to open the modal for new document 
 menu_multiple_notepad.addEventListener('click', () => {
     fileNameInput.value = ''
