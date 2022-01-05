@@ -27,20 +27,24 @@ menu_multiple_notepad.addEventListener('click', () => {
 
     menuFileOption.style.display = 'none';
     docModal.style.display = 'block';
-    docfileMenuBox.addEventListener('mouseenter', () => {
+    docfileMenuBox.addEventListener('mouseenter', displaySaveMenu);
+
+    function displaySaveMenu() {
         docSaveBtn.style.display = 'flex';
         notepadUpdateBtn.style.display = 'none';
-
-
         docfileMenuBox.style.backgroundColor = '#dee0e3';
+    }
 
+    docSaveBtn.addEventListener('click', () => {
+        // docSaveBtn.style.display = 'none';
+        // docfileMenuBox.style.backgroundColor = '';
+        docfileMenuBox.removeEventListener("mouseenter", displaySaveMenu)
+        docClose.click()
     });
+
 
     docClose.addEventListener('click', () => {
         docModal.style.display = 'none';
-
-
-
         //set default values
         // content.value = ''
         // content.style.fontWeight = ''
@@ -72,11 +76,7 @@ menu_multiple_notepad.addEventListener('click', () => {
 
 
 
-notepadSaveBtn.addEventListener('click', function () {
-    docSaveBtn.style.display = 'none';
-    docfileMenuBox.style.backgroundColor = '';
-    storeNotepadFile(undefined, undefined)
-})
+
 
 
 docBold.addEventListener('click', () => {
@@ -115,16 +115,22 @@ docFontOption.addEventListener('change', (e) => {
 })
 
 
-docSaveBtn.addEventListener('click', () => {
-    // docSaveBtn.style.display = 'none';
-    // docfileMenuBox.style.backgroundColor = '';
-    docClose.click()
-});
-docSaveBtn.addEventListener('mouseleave', () => {
-    notepadUpdateBtn.style.display = 'none';
+// docSaveBtn.addEventListener('click', () => {
+//     // docSaveBtn.style.display = 'none';
+//     // docfileMenuBox.style.backgroundColor = '';
+//     docfileMenuBox.removeEventListener("mouseenter",displaySaveMenu)
+//     docClose.click()
+// });
+notepadSaveBtn.addEventListener('click', function () {
     docSaveBtn.style.display = 'none';
     docfileMenuBox.style.backgroundColor = '';
-});
+    storeNotepadFile(undefined, undefined)
+})
+// docSaveBtn.addEventListener('mouseleave', () => {
+//     notepadUpdateBtn.style.display = 'none';
+//     docSaveBtn.style.display = 'none';
+//     docfileMenuBox.style.backgroundColor = '';
+// });
 
 
 notepadUpdateBtn.addEventListener('click', () => {
@@ -140,7 +146,7 @@ docClose.addEventListener('click', () => {
 });
 
 
-        
+
 
 function handleOpeningNotepad(fileData) {
     docModal.style.display = 'block';
@@ -157,31 +163,41 @@ function handleOpeningNotepad(fileData) {
     content.style.fontStyle = fileData.italic
     content.style.fontSize = fileData.fontSize
 
-    docfileMenuBox.addEventListener('mouseenter', () => {
+    docfileMenuBox.addEventListener('mouseenter', showUpdateButton);
+
+    function showUpdateButton() {
         notepadUpdateBtn.style.display = 'flex';
         notepadSaveBtn.style.display = 'none';
-
         docfileMenuBox.style.backgroundColor = '#dee0e3';
 
-    });
 
+        // removeFileMenuListener()
+    }
     notepadUpdateBtn.addEventListener('click', store)
-    function store(){
+    function store() {
         // console.log(fileData.id, fileData.fileName.split(".")[0]);
         storeNotepadFile(fileData.id, fileData.fileName.split(".")[0])
-        removeUpdateListener()
+        // removeUpdateListener()
     }
-    function removeUpdateListener(){
-        // console.log("Removed");
-        notepadUpdateBtn.removeEventListener('click',store)
+    function removeUpdateListener() {
+        console.log("Removed");
+        notepadUpdateBtn.removeEventListener('click', store)
     }
 
-    notepadUpdateBtn.addEventListener('mouseleave', () => {
+    function removeFileMenuListener() {
+        docfileMenuBox.removeEventListener('mouseenter', showUpdateButton)
+        docfileMenuBox.removeEventListener('mouseleave', hideUpdateButton)
+    }
 
+
+
+    notepadUpdateBtn.addEventListener('mouseleave', hideUpdateButton);
+
+    function hideUpdateButton() {
         notepadUpdateBtn.style.display = 'none';
         docfileMenuBox.style.backgroundColor = '';
-    });
-
+        // removeFileMenuListener()
+    }
 
     //handle fullscreen toggle
     let docFullScreen = document.querySelector('.fullscreen');
@@ -198,6 +214,12 @@ function handleOpeningNotepad(fileData) {
             docModal.style.top = '0px';
             isDocOpen = true;
         }
+    });
+
+    docClose.addEventListener('click', () => {
+        docModal.style.display = 'none';
+        removeFileMenuListener()
+        removeUpdateListener()
     });
 
 }
